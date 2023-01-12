@@ -1,0 +1,10 @@
+{
+	"Segment": {
+		"Store": {
+			"MaxBytes": 1024
+		},
+		"Index": {
+			"MaxBytes": 1024
+		}
+	}
+}
