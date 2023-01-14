@@ -83,3 +83,46 @@ func (s *segment) Append(content []byte) (uint64, error) {
 	return cur, nil
 
 }
+
+func (s *segment) Read(offset uint64) ([]byte, error) {
+
+	_, pos, err := s.index.Read(int64(offset))
+	if err != nil {
+		return nil, err
+	}
+
+	content, err := s.store.Read(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	return content, nil
+
+}
+
+func (s *segment) Close() error {
+
+	err := s.index.Close()
+	if err != nil {
+		return err
+	}
+
+	return s.store.Close()
+
+}
+
+func (s *segment) Remove() error {
+
+	err := s.Close()
+	if err != nil {
+		return err
+	}
+
+	err = os.Remove(s.index.Name())
+	if err != nil {
+		return err
+	}
+
+	return os.Remove(s.store.Name())
+
+}
