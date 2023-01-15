@@ -6,13 +6,10 @@ import (
 )
 
 type Config struct {
-	Segment struct {
-		Store struct {
-			MaxBytes uint64
-		}
-		Index struct {
-			MaxBytes uint64
-		}
+	LogDir string
+	WAL    struct {
+		MaxIndexBytes uint64
+		MaxStoreBytes uint64
 	}
 }
 

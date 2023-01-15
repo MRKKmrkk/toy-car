@@ -1,10 +1,8 @@
 {
-	"Segment": {
-		"Store": {
-			"MaxBytes": 1024
-		},
-		"Index": {
-			"MaxBytes": 1024
-		}
+	"LogDir": "/root/workspace/github.com/toy-car/test/data",
+	"WAL": {
+		"MaxIndexBytes": 1024,
+		"MaxStoreBytes": 1024,
+		"InitOffset": 0
 	}
 }
