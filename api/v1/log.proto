@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package log.v1;
+
+//option go_package = "github.com/travisjeffery/api/log_v1";
+option go_package = "./";
+
+message Message {
+	string key = 1;
+	string value = 2;
+	uint64 offset = 3;
+}
+
+//// define service
+//service Log {
+////normal rpc function
+//  rpc Produce(ProduceRequest) returns (ProduceResponse) {}
+////normal rpc function
+//  rpc Consume(ConsumeRequest) returns (ConsumeResponse) {}
+//  // stream function at server
+//  rpc ConsumeStream(ConsumeRequest) returns (stream ConsumeResponse) {}
+//  // stream function at both side
+//  rpc ProduceStream(stream ProduceRequest) returns (stream ProduceResponse) {}
+//}
+//
+//message ProduceRequest  {
+//  Record record = 1;
+//}
+//
+//message ProduceResponse  {
+//  uint64 offset = 1;
+//}
+//
+//message ConsumeRequest {
+//  uint64 offset = 1;
+//}
+//
+//message ConsumeResponse {
+//  Record record = 2;
+//}
+//
+//message Record {
+//  bytes value = 1;
+//  uint64 offset = 2;
+//}

@@ -31,7 +31,7 @@ func NewIndex(f *os.File, config *config.Config) (*index, error) {
 
 	// apply memory as config.Segment.Store.MaxBytes to map file
 	size := info.Size()
-	err = os.Truncate(f.Name(), int64(config.Segment.Index.MaxBytes))
+	err = os.Truncate(f.Name(), int64(config.WAL.MaxIndexBytes))
 	if err != nil {
 		return nil, err
 	}

@@ -126,3 +126,9 @@ func (s *segment) Remove() error {
 	return os.Remove(s.store.Name())
 
 }
+
+func (s *segment) IsMax() bool {
+
+	return s.index.size >= s.config.WAL.MaxIndexBytes || s.store.size >= s.config.WAL.MaxStoreBytes
+
+}
