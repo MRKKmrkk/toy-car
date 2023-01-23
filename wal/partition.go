@@ -29,7 +29,7 @@ func NewPartition(topicName string, partitionId uint64, config *config.Config) (
 		config:      config,
 	}
 
-	dir := path.Join(config.LogDir, p.ParitionName())
+	dir := path.Join(config.LogDir, p.ParitionName()+"/")
 	err := os.MkdirAll(dir, os.ModePerm)
 	if err != nil && !os.IsExist(err) {
 		return nil, err

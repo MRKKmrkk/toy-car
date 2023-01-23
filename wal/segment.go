@@ -23,6 +23,7 @@ func NewSegment(dir string, baseOffset uint64, config *config.Config) (*segment,
 	}
 
 	// create store
+	fmt.Println(dir, fmt.Sprintf("%d.store", baseOffset))
 	storeFile, err := os.OpenFile(
 		path.Join(dir, fmt.Sprintf("%d.store", baseOffset)),
 		os.O_RDWR|os.O_CREATE|os.O_APPEND,

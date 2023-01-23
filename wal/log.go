@@ -84,6 +84,12 @@ func NewLog(dir string, config *config.Config) (*log, error) {
 		// so we need plus i twice
 		i++
 	}
+	if len(baseOffsets) == 0 {
+		err = l.newSegment(uint64(config.WAL.InitOffset))
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	return l, nil
 
@@ -117,7 +123,8 @@ func (l *log) Read(offset uint64) ([]byte, error) {
 
 	var cur *segment
 	for _, segment := range l.segments {
-		if offset <= segment.baseOffset && offset <= segment.nextOffset {
+		// todo: org: if offset <= segment.baseOffset && offset <= segment.nextOffset {
+		if offset >= segment.baseOffset && offset <= segment.nextOffset {
 			cur = segment
 			break
 		}
