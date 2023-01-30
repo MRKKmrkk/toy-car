@@ -1,6 +1,7 @@
 package wal
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"toy-car/config"
@@ -82,7 +83,7 @@ func (i *index) Read(offset int64) (uint32, uint64, error) {
 	defer i.mmap.Unlock()
 
 	if i.size == 0 {
-		return 0, 0, nil
+		return 0, 0, fmt.Errorf("cannt read a empty index file")
 	}
 
 	// -1 repesents the last offset of index

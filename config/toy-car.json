@@ -1,8 +1,14 @@
 {
-	"LogDir": "/root/workspace/github.com/toy-car/test/data",
+	"LogDir": "/root/workspace/github.com/toy-car/test",
 	"WAL": {
 		"MaxIndexBytes": 1024,
 		"MaxStoreBytes": 1024,
 		"InitOffset": 0
+	},
+	"Server": {
+		"ListenerAddress": "127.0.0.1",
+		"ListenerPort": "9999",
+		"ZookeeperConnects": ["ESNI-Master:9700"],
+		"ZookeeperTimeoutSeconds": 5
 	}
 }
