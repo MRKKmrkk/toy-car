@@ -8,14 +8,21 @@ import (
 type Config struct {
 	LogDir string
 	WAL    struct {
+		InitOffset    uint64
 		MaxIndexBytes uint64
 		MaxStoreBytes uint64
 	}
+	Server struct {
+		ListenerAddress         string
+		ListenerPort            string
+		ZookeeperConnects       []string
+		ZookeeperTimeoutSeconds int
+	}
 }
 
-func NewConfig(path string) (*Config, error) {
+func NewConfig() (*Config, error) {
 
-	content, err := ioutil.ReadFile(path)
+	content, err := ioutil.ReadFile("/root/workspace/github.com/toy-car/config/toy-car.json")
 	if err != nil {
 		return nil, err
 	}
