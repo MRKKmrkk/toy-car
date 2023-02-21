@@ -8,7 +8,7 @@
 	"Server": {
 		"ListenerAddress": "127.0.0.1",
 		"ListenerPort": "9999",
-		"ZookeeperConnects": ["ESNI-Master:9700"],
+		"ZookeeperConnects": ["www.zhanmabigdata.top:9700"],
 		"ZookeeperTimeoutSeconds": 5
 	}
 }
