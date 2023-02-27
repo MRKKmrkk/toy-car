@@ -2,10 +2,13 @@ package member
 
 import (
 	"path"
+	"strconv"
 	"strings"
+	api "toy-car/api/v1"
 	"toy-car/config"
 	"toy-car/zookeeper"
 
+	"github.com/golang/protobuf/proto"
 	"github.com/samuel/go-zookeeper/zk"
 )
 
@@ -70,10 +73,19 @@ func (ms *MemberShip) Init() error {
 // maybe need a lock here
 func (ms *MemberShip) Join() error {
 
-	_, err := ms.zkConn.Create(
-		path.Join("/toy-car/brokers/ids/0"),
-		[]byte(ms.config.Server.ListenerAddress+":"+ms.config.Server.ListenerPort),
-		3,
+	broker := &api.Broker{
+		ListenerAddress: ms.config.Server.ListenerAddress,
+		ListenerPort:    ms.config.Server.ListenerPort,
+	}
+	brokerData, err := proto.Marshal(broker)
+	if err != nil {
+		return err
+	}
+
+	_, err = ms.zkConn.Create(
+		path.Join("/toy-car/brokers/ids/"+strconv.Itoa(int(ms.config.Server.BrokerId))),
+		brokerData,
+		zk.FlagEphemeral,
 		zk.WorldACL(zk.PermAll),
 	)
 

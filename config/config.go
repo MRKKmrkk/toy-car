@@ -13,6 +13,7 @@ type Config struct {
 		MaxStoreBytes uint64
 	}
 	Server struct {
+		BrokerId                int64
 		ListenerAddress         string
 		ListenerPort            string
 		ZookeeperConnects       []string
@@ -22,7 +23,7 @@ type Config struct {
 
 func NewConfig() (*Config, error) {
 
-	content, err := ioutil.ReadFile("/home/zsq/workspace/github.com/toy-car/config/toy-car.json")
+	content, err := ioutil.ReadFile("/root/workspace/github.com/toy-car/config/toy-car.json")
 	if err != nil {
 		return nil, err
 	}

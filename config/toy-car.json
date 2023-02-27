@@ -6,6 +6,7 @@
 		"InitOffset": 0
 	},
 	"Server": {
+		"BrokerId": 1, 
 		"ListenerAddress": "127.0.0.1",
 		"ListenerPort": "9999",
 		"ZookeeperConnects": ["www.zhanmabigdata.top:9700"],

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package log.v1;
+
+option go_package = "./";
+
+message ControllerMetaData {
+  int64 BrokerId = 1;
+  uint64  Timestamp= 2;
+}
+
+message BrokerMetaData {
+  int64 BrokerId = 1;
+  string ListenerAddress = 2;
+  string ListenerPort = 3;
+}
