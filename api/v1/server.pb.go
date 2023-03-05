@@ -138,6 +138,108 @@ func (x *BrokerMetaData) GetListenerPort() string {
 	return ""
 }
 
+type BrokerIds struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BrokerId []int32 `protobuf:"varint,1,rep,packed,name=BrokerId,proto3" json:"BrokerId,omitempty"`
+}
+
+func (x *BrokerIds) Reset() {
+	*x = BrokerIds{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_server_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BrokerIds) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BrokerIds) ProtoMessage() {}
+
+func (x *BrokerIds) ProtoReflect() protoreflect.Message {
+	mi := &file_server_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BrokerIds.ProtoReflect.Descriptor instead.
+func (*BrokerIds) Descriptor() ([]byte, []int) {
+	return file_server_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *BrokerIds) GetBrokerId() []int32 {
+	if x != nil {
+		return x.BrokerId
+	}
+	return nil
+}
+
+type TopicMetaData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Version    int32                `protobuf:"varint,1,opt,name=Version,proto3" json:"Version,omitempty"`
+	Partitions map[int32]*BrokerIds `protobuf:"bytes,2,rep,name=Partitions,proto3" json:"Partitions,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *TopicMetaData) Reset() {
+	*x = TopicMetaData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_server_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TopicMetaData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TopicMetaData) ProtoMessage() {}
+
+func (x *TopicMetaData) ProtoReflect() protoreflect.Message {
+	mi := &file_server_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TopicMetaData.ProtoReflect.Descriptor instead.
+func (*TopicMetaData) Descriptor() ([]byte, []int) {
+	return file_server_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *TopicMetaData) GetVersion() int32 {
+	if x != nil {
+		return x.Version
+	}
+	return 0
+}
+
+func (x *TopicMetaData) GetPartitions() map[int32]*BrokerIds {
+	if x != nil {
+		return x.Partitions
+	}
+	return nil
+}
+
 var File_server_proto protoreflect.FileDescriptor
 
 var file_server_proto_rawDesc = []byte{
@@ -155,7 +257,22 @@ var file_server_proto_rawDesc = []byte{
 	0x69, 0x73, 0x74, 0x65, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x22,
 	0x0a, 0x0c, 0x4c, 0x69, 0x73, 0x74, 0x65, 0x6e, 0x65, 0x72, 0x50, 0x6f, 0x72, 0x74, 0x18, 0x03,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x4c, 0x69, 0x73, 0x74, 0x65, 0x6e, 0x65, 0x72, 0x50, 0x6f,
-	0x72, 0x74, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x74, 0x22, 0x27, 0x0a, 0x09, 0x42, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12,
+	0x1a, 0x0a, 0x08, 0x42, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x05, 0x52, 0x08, 0x42, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x49, 0x64, 0x22, 0xc2, 0x01, 0x0a, 0x0d,
+	0x54, 0x6f, 0x70, 0x69, 0x63, 0x4d, 0x65, 0x74, 0x61, 0x44, 0x61, 0x74, 0x61, 0x12, 0x18, 0x0a,
+	0x07, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07,
+	0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x45, 0x0a, 0x0a, 0x50, 0x61, 0x72, 0x74, 0x69,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x6c, 0x6f,
+	0x67, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x6f, 0x70, 0x69, 0x63, 0x4d, 0x65, 0x74, 0x61, 0x44, 0x61,
+	0x74, 0x61, 0x2e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x45, 0x6e, 0x74,
+	0x72, 0x79, 0x52, 0x0a, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x1a, 0x50,
+	0x0a, 0x0f, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x45, 0x6e, 0x74, 0x72,
+	0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03,
+	0x6b, 0x65, 0x79, 0x12, 0x27, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x11, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x42, 0x72, 0x6f, 0x6b,
+	0x65, 0x72, 0x49, 0x64, 0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01,
+	0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -170,17 +287,22 @@ func file_server_proto_rawDescGZIP() []byte {
 	return file_server_proto_rawDescData
 }
 
-var file_server_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_server_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_server_proto_goTypes = []interface{}{
 	(*ControllerMetaData)(nil), // 0: log.v1.ControllerMetaData
 	(*BrokerMetaData)(nil),     // 1: log.v1.BrokerMetaData
+	(*BrokerIds)(nil),          // 2: log.v1.BrokerIds
+	(*TopicMetaData)(nil),      // 3: log.v1.TopicMetaData
+	nil,                        // 4: log.v1.TopicMetaData.PartitionsEntry
 }
 var file_server_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4, // 0: log.v1.TopicMetaData.Partitions:type_name -> log.v1.TopicMetaData.PartitionsEntry
+	2, // 1: log.v1.TopicMetaData.PartitionsEntry.value:type_name -> log.v1.BrokerIds
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_server_proto_init() }
@@ -213,6 +335,30 @@ func file_server_proto_init() {
 				return nil
 			}
 		}
+		file_server_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BrokerIds); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_server_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TopicMetaData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -220,7 +366,7 @@ func file_server_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_server_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

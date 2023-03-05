@@ -4,10 +4,15 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
+	"math/rand"
 	"strconv"
 	"strings"
 	api "toy-car/api/v1"
 	"toy-car/config"
+	"toy-car/zookeeper"
+
+	"github.com/golang/protobuf/proto"
+	"github.com/samuel/go-zookeeper/zk"
 )
 
 type Topic struct {
@@ -30,11 +35,41 @@ func listLogDir(config *config.Config) ([]fs.FileInfo, error) {
 	return files, nil
 }
 
-func CreateTopic(topicName string, partitionNum uint64, config *config.Config) (*Topic, error) {
+func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum int) ([]int, error) {
+
+	c, err := config.NewConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	ids, err := conn.ListBrokerId()
+	if err != nil {
+		return nil, err
+	}
+
+	switch c.Replica.AllocationPolicy {
+	case "random":
+		rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
+	}
+
+	return ids[:replicaNum], nil
+
+}
+
+func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *config.Config) (*Topic, error) {
 
 	_, err := listLogDir(config)
 	if err != nil {
 		return nil, err
+	}
+
+	conn, err := zookeeper.GetOrCreateZookeeperConnection()
+	if err != nil {
+		return nil, err
+	}
+
+	topicMetaData := &api.TopicMetaData{
+		Version: 1,
 	}
 
 	topic := &Topic{
@@ -49,7 +84,29 @@ func CreateTopic(topicName string, partitionNum uint64, config *config.Config) (
 			return nil, err
 		}
 		topic.partitions[i] = p
+
+		// allocate repplicates
+		ids, err := allocateReplicaByPolicy(conn, replicaNum)
+		if err != nil {
+			return nil, err
+		}
+		for _, v := range ids {
+			topicMetaData.Partitions[int32(i)].BrokerId = append(topicMetaData.Partitions[int32(i)].BrokerId, int32(v))
+		}
+
 	}
+
+	// log topic information in zookeeper
+	bytes, err := proto.Marshal(topicMetaData)
+	if err != nil {
+		return nil, err
+	}
+	conn.Create(
+		fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
+		bytes,
+		zookeeper.FlagLasting,
+		zk.WorldACL(zk.PermAll),
+	)
 
 	return topic, nil
 

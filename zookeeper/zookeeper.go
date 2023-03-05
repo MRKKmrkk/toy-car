@@ -2,12 +2,16 @@ package zookeeper
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
+	api "toy-car/api/v1"
 	"toy-car/config"
 
 	"github.com/samuel/go-zookeeper/zk"
 )
+
+const FlagLasting = 0
 
 type RichZookeeperConnection struct {
 	zk.Conn
@@ -107,5 +111,23 @@ func (conn *RichZookeeperConnection) RecurseCreate(path string, flag int32, acl 
 	}
 
 	return conn.recurseCreate(path, flag, acl)
+
+}
+
+func (conn *RichZookeeperConnection) ListBrokerId() ([]int, error) {
+
+	paths, _, _ := conn.Children("/toy-car/brokers/ids")
+	brokerIds = &api.BrokerIds{}
+
+	for i, v := range paths {
+		num, err := strconv.Atoi(v)
+		if err != nil {
+			return nil, err
+		}
+
+		brokerIds = append(brokerIds, num)
+	}
+
+	return ids, nil
 
 }

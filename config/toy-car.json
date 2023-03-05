@@ -11,5 +11,8 @@
 		"ListenerPort": "9999",
 		"ZookeeperConnects": ["www.zhanmabigdata.top:9700"],
 		"ZookeeperTimeoutSeconds": 5
+	},
+	"Replica": {
+		"AllocationPolicy": "random"
 	}
 }

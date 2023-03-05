@@ -134,10 +134,13 @@ func NewToyCarServer(config *config.Config) (*ToyCarServer, error) {
 }
 
 func (tcs *ToyCarServer) Run() {
+
 	tcs.server.Serve(tcs.listener)
+
 }
 
 func (tcs *ToyCarServer) Close() error {
+
 	err := tcs.listener.Close()
 	if err != nil {
 		return err
@@ -153,4 +156,5 @@ func (tcs *ToyCarServer) Close() error {
 	}
 
 	return nil
+
 }

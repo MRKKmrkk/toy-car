@@ -19,6 +19,9 @@ type Config struct {
 		ZookeeperConnects       []string
 		ZookeeperTimeoutSeconds int
 	}
+	Replica struct {
+		AllocationPolicy string
+	}
 }
 
 func NewConfig() (*Config, error) {
