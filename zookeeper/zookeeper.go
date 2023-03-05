@@ -13,24 +13,24 @@ type RichZookeeperConnection struct {
 	zk.Conn
 }
 
-var zkConn *RichZookeeperConnection
+var ZKConn *RichZookeeperConnection
 
-func getOrCreateZookeeperConnection() (*RichZookeeperConnection, error) {
+func GetOrCreateZookeeperConnection() (*RichZookeeperConnection, error) {
 
-	if zkConn == nil {
+	if ZKConn == nil {
 		conf, err := config.NewConfig()
 		if err != nil {
 			return nil, err
 		}
 
-		zkConn, err = NewRichZookeeperConnection(conf)
+		ZKConn, err = NewRichZookeeperConnection(conf)
 		if err != nil {
 			return nil, err
 		}
 
 	}
 
-	return zkConn, nil
+	return ZKConn, nil
 }
 
 // create rich zookeeper connection instance
