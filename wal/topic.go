@@ -9,6 +9,7 @@ import (
 	"strings"
 	api "toy-car/api/v1"
 	"toy-car/config"
+	"toy-car/util"
 	"toy-car/zookeeper"
 
 	"github.com/golang/protobuf/proto"
@@ -71,6 +72,7 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 	topicMetaData := &api.TopicMetaData{
 		Version: 1,
 	}
+	topicMetaData.Partitions = make(map[int32]*api.BrokerIds)
 
 	topic := &Topic{
 		topicName:  topicName,
@@ -85,13 +87,35 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		}
 		topic.partitions[i] = p
 
-		// allocate repplicates
+		// allocate repplicates to topic
 		ids, err := allocateReplicaByPolicy(conn, replicaNum)
 		if err != nil {
 			return nil, err
 		}
+
+		topicMetaData.Partitions[int32(i)] = &api.BrokerIds{}
 		for _, v := range ids {
 			topicMetaData.Partitions[int32(i)].BrokerId = append(topicMetaData.Partitions[int32(i)].BrokerId, int32(v))
+		}
+
+		// log parititon state in zookeeper
+		state := &api.PartitionState{
+			ControllerEpoch: 0,
+			Version:         1,
+			ISR:             util.ArrayIntToInt32(ids),
+		}
+		bytes, err := proto.Marshal(state)
+		if err != nil {
+			return nil, err
+		}
+		_, err = conn.Create(
+			fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
+			bytes,
+			zookeeper.FlagLasting,
+			zk.WorldACL(zk.PermAll),
+		)
+		if err != nil {
+			return nil, err
 		}
 
 	}
@@ -101,12 +125,15 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 	if err != nil {
 		return nil, err
 	}
-	conn.Create(
+	_, err = conn.Create(
 		fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
 		bytes,
 		zookeeper.FlagLasting,
 		zk.WorldACL(zk.PermAll),
 	)
+	if err != nil {
+		return nil, err
+	}
 
 	return topic, nil
 
