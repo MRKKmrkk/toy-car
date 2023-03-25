@@ -57,36 +57,74 @@ func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum
 
 }
 
-//func registTopicMetaData() error {
-//	// log parititon state in zookeeper
-//	state := &api.PartitionState{
-//		ControllerEpoch: 0,
-//		Version:         1,
-//		ISR:             util.ArrayIntToInt32(ids),
-//	}
-//	bytes, err := proto.Marshal(state)
-//	if err != nil {
-//		return nil, err
-//	}
-//	err = conn.RecurseCreate(
-//		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
-//		zookeeper.FlagLasting,
-//		zk.WorldACL(zk.PermAll),
-//	)
-//	if err != nil && err.Error() != "zk: node already exists" {
-//		return nil, err
-//	}
-//
-//	_, err = conn.Set(
-//		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
-//		bytes,
-//		-1,
-//	)
-//
-//	if err != nil {
-//		return nil, err
-//	}
-//}
+// log parititon state in zookeeper
+func registParititionStateMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, partitionId int, ids []int) error {
+
+	state := &api.PartitionState{
+		ControllerEpoch: 0,
+		Version:         1,
+		ISR:             util.ArrayIntToInt32(ids),
+	}
+	bytes, err := proto.Marshal(state)
+	if err != nil {
+		return err
+	}
+
+	err = conn.RecurseCreate(
+		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, partitionId),
+		zookeeper.FlagLasting,
+		zk.WorldACL(zk.PermAll),
+	)
+	if err != nil && err.Error() != "zk: node already exists" {
+		return err
+	}
+
+	_, err = conn.Set(
+		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, partitionId),
+		bytes,
+		-1,
+	)
+
+	return err
+
+}
+
+func registTopicMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, topicMetaData *api.TopicMetaData) error {
+
+	// log topic information in zookeeper
+	bytes, err := proto.Marshal(topicMetaData)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Create(
+		fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
+		bytes,
+		zookeeper.FlagLasting,
+		zk.WorldACL(zk.PermAll),
+	)
+
+	if err == nil {
+		return nil
+	}
+
+	if err.Error() == "zk: node already exists" {
+		_, err = conn.Set(
+			fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
+			bytes,
+			-1,
+		)
+
+		if err == nil {
+			return nil
+		}
+	} else {
+		return err
+	}
+
+	return err
+
+}
 
 func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *config.Config) (*Topic, error) {
 
@@ -135,30 +173,7 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		}
 
 		// log parititon state in zookeeper
-		state := &api.PartitionState{
-			ControllerEpoch: 0,
-			Version:         1,
-			ISR:             util.ArrayIntToInt32(ids),
-		}
-		bytes, err := proto.Marshal(state)
-		if err != nil {
-			return nil, err
-		}
-		err = conn.RecurseCreate(
-			fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
-			zookeeper.FlagLasting,
-			zk.WorldACL(zk.PermAll),
-		)
-		if err != nil && err.Error() != "zk: node already exists" {
-			return nil, err
-		}
-
-		_, err = conn.Set(
-			fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
-			bytes,
-			-1,
-		)
-
+		err = registParititionStateMetaData(conn, topicName, int(i), ids)
 		if err != nil {
 			return nil, err
 		}
@@ -166,37 +181,12 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 	}
 
 	// log topic information in zookeeper
-	bytes, err := proto.Marshal(topicMetaData)
+	err = registTopicMetaData(conn, topicName, topicMetaData)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = conn.Create(
-		fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
-		bytes,
-		zookeeper.FlagLasting,
-		zk.WorldACL(zk.PermAll),
-	)
-
-	if err == nil {
-		return topic, err
-	}
-
-	if err.Error() == "zk: node already exists" {
-		_, err = conn.Set(
-			fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
-			bytes,
-			-1,
-		)
-
-		if err == nil {
-			return topic, err
-		}
-	} else {
-		return nil, err
-	}
-
-	return nil, err
+	return topic, nil
 
 }
 

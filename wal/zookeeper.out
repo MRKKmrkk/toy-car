@@ -967,3 +967,12 @@
 2023-03-25 15:59:53,210 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:41926 which had sessionid 0x10001b7e87d005d
 2023-03-25 15:59:59,979 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x10001b7e87d005d, timeout of 5000ms exceeded
 2023-03-25 15:59:59,982 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x10001b7e87d005d
+2023-03-25 16:26:52,108 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:42576
+2023-03-25 16:26:52,111 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:42576; will be dropped if server is in r-o mode
+2023-03-25 16:26:52,112 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:42576
+2023-03-25 16:26:52,134 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x10001b7e87d005e with negotiated timeout 5000 for client /1.15.135.178:42576
+2023-03-25 16:26:52,887 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x10001b7e87d005e type:create cxid:0x24 zxid:0x452 txntype:-1 reqpath:n/a Error Path:/toy-car/brokers/topics/topic_test_22 Error:KeeperErrorCode = NodeExists for /toy-car/brokers/topics/topic_test_22
+2023-03-25 16:26:53,036 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x10001b7e87d005e, likely client has closed socket
+2023-03-25 16:26:53,037 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:42576 which had sessionid 0x10001b7e87d005e
+2023-03-25 16:26:57,981 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x10001b7e87d005e, timeout of 5000ms exceeded
+2023-03-25 16:26:57,982 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x10001b7e87d005e
