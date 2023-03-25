@@ -57,7 +57,43 @@ func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum
 
 }
 
+//func registTopicMetaData() error {
+//	// log parititon state in zookeeper
+//	state := &api.PartitionState{
+//		ControllerEpoch: 0,
+//		Version:         1,
+//		ISR:             util.ArrayIntToInt32(ids),
+//	}
+//	bytes, err := proto.Marshal(state)
+//	if err != nil {
+//		return nil, err
+//	}
+//	err = conn.RecurseCreate(
+//		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
+//		zookeeper.FlagLasting,
+//		zk.WorldACL(zk.PermAll),
+//	)
+//	if err != nil && err.Error() != "zk: node already exists" {
+//		return nil, err
+//	}
+//
+//	_, err = conn.Set(
+//		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
+//		bytes,
+//		-1,
+//	)
+//
+//	if err != nil {
+//		return nil, err
+//	}
+//}
+
 func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *config.Config) (*Topic, error) {
+
+	// need checkout replicaNum
+	if replicaNum < 1 {
+		return nil, fmt.Errorf("replica number can not smaller than 1, but got %d", replicaNum)
+	}
 
 	_, err := listLogDir(config)
 	if err != nil {
@@ -108,12 +144,21 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		if err != nil {
 			return nil, err
 		}
-		_, err = conn.Create(
+		err = conn.RecurseCreate(
 			fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
-			bytes,
 			zookeeper.FlagLasting,
 			zk.WorldACL(zk.PermAll),
 		)
+		if err != nil && err.Error() != "zk: node already exists" {
+			return nil, err
+		}
+
+		_, err = conn.Set(
+			fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, i),
+			bytes,
+			-1,
+		)
+
 		if err != nil {
 			return nil, err
 		}
@@ -125,17 +170,33 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 	if err != nil {
 		return nil, err
 	}
+
 	_, err = conn.Create(
 		fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
 		bytes,
 		zookeeper.FlagLasting,
 		zk.WorldACL(zk.PermAll),
 	)
-	if err != nil {
+
+	if err == nil {
+		return topic, err
+	}
+
+	if err.Error() == "zk: node already exists" {
+		_, err = conn.Set(
+			fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
+			bytes,
+			-1,
+		)
+
+		if err == nil {
+			return topic, err
+		}
+	} else {
 		return nil, err
 	}
 
-	return topic, nil
+	return nil, err
 
 }
 

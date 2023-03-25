@@ -67,6 +67,19 @@ func (ms *Broker) Init() error {
 		)
 	}
 
+	isExists, err = ms.zkConn.IsExists("/toy-car/brokers/topics")
+	if err != nil {
+		return err
+	}
+
+	if !isExists {
+		ms.zkConn.RecurseCreate(
+			"/toy-car/brokers/topics",
+			0,
+			zk.WorldACL(zk.PermAll),
+		)
+	}
+
 	return nil
 
 }

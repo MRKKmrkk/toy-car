@@ -240,6 +240,85 @@ func (x *TopicMetaData) GetPartitions() map[int32]*BrokerIds {
 	return nil
 }
 
+type PartitionState struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ControllerEpoch int64   `protobuf:"varint,1,opt,name=ControllerEpoch,proto3" json:"ControllerEpoch,omitempty"`
+	Leader          int32   `protobuf:"varint,2,opt,name=Leader,proto3" json:"Leader,omitempty"`
+	Version         int32   `protobuf:"varint,3,opt,name=Version,proto3" json:"Version,omitempty"`
+	LeaderEpoch     int64   `protobuf:"varint,4,opt,name=LeaderEpoch,proto3" json:"LeaderEpoch,omitempty"`
+	ISR             []int32 `protobuf:"varint,5,rep,packed,name=ISR,proto3" json:"ISR,omitempty"`
+}
+
+func (x *PartitionState) Reset() {
+	*x = PartitionState{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_server_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PartitionState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PartitionState) ProtoMessage() {}
+
+func (x *PartitionState) ProtoReflect() protoreflect.Message {
+	mi := &file_server_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PartitionState.ProtoReflect.Descriptor instead.
+func (*PartitionState) Descriptor() ([]byte, []int) {
+	return file_server_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *PartitionState) GetControllerEpoch() int64 {
+	if x != nil {
+		return x.ControllerEpoch
+	}
+	return 0
+}
+
+func (x *PartitionState) GetLeader() int32 {
+	if x != nil {
+		return x.Leader
+	}
+	return 0
+}
+
+func (x *PartitionState) GetVersion() int32 {
+	if x != nil {
+		return x.Version
+	}
+	return 0
+}
+
+func (x *PartitionState) GetLeaderEpoch() int64 {
+	if x != nil {
+		return x.LeaderEpoch
+	}
+	return 0
+}
+
+func (x *PartitionState) GetISR() []int32 {
+	if x != nil {
+		return x.ISR
+	}
+	return nil
+}
+
 var File_server_proto protoreflect.FileDescriptor
 
 var file_server_proto_rawDesc = []byte{
@@ -272,7 +351,18 @@ var file_server_proto_rawDesc = []byte{
 	0x6b, 0x65, 0x79, 0x12, 0x27, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x11, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x42, 0x72, 0x6f, 0x6b,
 	0x65, 0x72, 0x49, 0x64, 0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01,
-	0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0xa0, 0x01, 0x0a, 0x0e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x12, 0x28, 0x0a, 0x0f, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65,
+	0x72, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0f, 0x43, 0x6f,
+	0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x16, 0x0a,
+	0x06, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x4c,
+	0x65, 0x61, 0x64, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12,
+	0x20, 0x0a, 0x0b, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x45, 0x70, 0x6f, 0x63,
+	0x68, 0x12, 0x10, 0x0a, 0x03, 0x49, 0x53, 0x52, 0x18, 0x05, 0x20, 0x03, 0x28, 0x05, 0x52, 0x03,
+	0x49, 0x53, 0x52, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -287,16 +377,17 @@ func file_server_proto_rawDescGZIP() []byte {
 	return file_server_proto_rawDescData
 }
 
-var file_server_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_server_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_server_proto_goTypes = []interface{}{
 	(*ControllerMetaData)(nil), // 0: log.v1.ControllerMetaData
 	(*BrokerMetaData)(nil),     // 1: log.v1.BrokerMetaData
 	(*BrokerIds)(nil),          // 2: log.v1.BrokerIds
 	(*TopicMetaData)(nil),      // 3: log.v1.TopicMetaData
-	nil,                        // 4: log.v1.TopicMetaData.PartitionsEntry
+	(*PartitionState)(nil),     // 4: log.v1.PartitionState
+	nil,                        // 5: log.v1.TopicMetaData.PartitionsEntry
 }
 var file_server_proto_depIdxs = []int32{
-	4, // 0: log.v1.TopicMetaData.Partitions:type_name -> log.v1.TopicMetaData.PartitionsEntry
+	5, // 0: log.v1.TopicMetaData.Partitions:type_name -> log.v1.TopicMetaData.PartitionsEntry
 	2, // 1: log.v1.TopicMetaData.PartitionsEntry.value:type_name -> log.v1.BrokerIds
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
@@ -359,6 +450,18 @@ func file_server_proto_init() {
 				return nil
 			}
 		}
+		file_server_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PartitionState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -366,7 +469,7 @@ func file_server_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_server_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

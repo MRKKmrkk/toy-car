@@ -73,7 +73,7 @@ func (s *grpcServer) Produce(ctx context.Context, req *api.ProduceRequest) (*api
 
 	topic, isExists := s.Topics[req.GetTopic()]
 	if !isExists {
-		t, err := wal.CreateTopic(req.GetTopic(), req.PartitionId+1, s.Config)
+		t, err := wal.CreateTopic(req.GetTopic(), req.PartitionId+1, 1, s.Config)
 		if err != nil {
 			return nil, err
 		}

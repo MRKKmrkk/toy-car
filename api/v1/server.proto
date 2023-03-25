@@ -23,3 +23,11 @@ message TopicMetaData {
   int32 Version = 1;
   map<int32, BrokerIds> Partitions = 2;
 }
+
+message PartitionState {
+  int64 ControllerEpoch = 1;
+  int32 Leader = 2;
+  int32 Version = 3;
+  int64 LeaderEpoch = 4;
+  repeated int32 ISR = 5;
+}

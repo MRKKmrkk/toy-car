@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	api "toy-car/api/v1"
 	"toy-car/config"
 
 	"github.com/samuel/go-zookeeper/zk"
@@ -117,7 +116,7 @@ func (conn *RichZookeeperConnection) RecurseCreate(path string, flag int32, acl 
 func (conn *RichZookeeperConnection) ListBrokerId() ([]int, error) {
 
 	paths, _, _ := conn.Children("/toy-car/brokers/ids")
-	brokerIds = &api.BrokerIds{}
+	ids := make([]int, len(paths))
 
 	for i, v := range paths {
 		num, err := strconv.Atoi(v)
@@ -125,7 +124,7 @@ func (conn *RichZookeeperConnection) ListBrokerId() ([]int, error) {
 			return nil, err
 		}
 
-		brokerIds = append(brokerIds, num)
+		ids[i] = num
 	}
 
 	return ids, nil
