@@ -2,6 +2,7 @@ package zookeeper
 
 import (
 	"fmt"
+	pt "path"
 	"strconv"
 	"strings"
 	"time"
@@ -128,5 +129,30 @@ func (conn *RichZookeeperConnection) ListBrokerId() ([]int, error) {
 	}
 
 	return ids, nil
+
+}
+
+func (conn *RichZookeeperConnection) RecurseDelete(path string) error {
+
+	nodes, _, err := conn.Children(path)
+	if err != nil {
+		return err
+	}
+
+	if len(nodes) != 0 {
+		for _, node := range nodes {
+			err = conn.RecurseDelete(pt.Join(path, node))
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	_, stat, err := conn.Get(path)
+	if err != nil {
+		return err
+	}
+
+	return conn.Delete(path, stat.Version)
 
 }
