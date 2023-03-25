@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 	api "toy-car/api/v1"
 	"toy-car/config"
 	"toy-car/util"
@@ -50,7 +51,8 @@ func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum
 
 	switch c.Replica.AllocationPolicy {
 	case "random":
-		rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
+		r := rand.New(rand.NewSource(time.Now().UnixNano()))
+		r.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
 	}
 
 	return ids[:replicaNum], nil
@@ -60,10 +62,16 @@ func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum
 // log parititon state in zookeeper
 func registParititionStateMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, partitionId int, ids []int) error {
 
+	leader := int32(-1)
+	if len(ids) != 0 {
+		leader = int32(ids[0])
+	}
+
 	state := &api.PartitionState{
 		ControllerEpoch: 0,
 		Version:         1,
 		ISR:             util.ArrayIntToInt32(ids),
+		Leader:          leader,
 	}
 	bytes, err := proto.Marshal(state)
 	if err != nil {
