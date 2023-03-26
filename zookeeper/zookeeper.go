@@ -6,10 +6,30 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	api "toy-car/api/v1"
 	"toy-car/config"
 
+	"github.com/golang/protobuf/proto"
 	"github.com/samuel/go-zookeeper/zk"
 )
+
+func GetTopicZookeeperPath() string {
+
+	return "/toy-car/brokers/topics"
+
+}
+
+func GetParititionZookeeperPath(topic string) string {
+
+	return fmt.Sprintf("/toy-car/brokers/topics/%s/partitions", topic)
+
+}
+
+func GetPartitionStateZookeeperPath(topic string, paritionId int) string {
+
+	return fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topic, paritionId)
+
+}
 
 const FlagLasting = 0
 
@@ -114,24 +134,6 @@ func (conn *RichZookeeperConnection) RecurseCreate(path string, flag int32, acl 
 
 }
 
-func (conn *RichZookeeperConnection) ListBrokerId() ([]int, error) {
-
-	paths, _, _ := conn.Children("/toy-car/brokers/ids")
-	ids := make([]int, len(paths))
-
-	for i, v := range paths {
-		num, err := strconv.Atoi(v)
-		if err != nil {
-			return nil, err
-		}
-
-		ids[i] = num
-	}
-
-	return ids, nil
-
-}
-
 func (conn *RichZookeeperConnection) RecurseDelete(path string) error {
 
 	nodes, _, err := conn.Children(path)
@@ -154,5 +156,83 @@ func (conn *RichZookeeperConnection) RecurseDelete(path string) error {
 	}
 
 	return conn.Delete(path, stat.Version)
+
+}
+
+func (conn *RichZookeeperConnection) ListBrokerId() ([]int, error) {
+
+	paths, _, _ := conn.Children("/toy-car/brokers/ids")
+	ids := make([]int, len(paths))
+
+	for i, v := range paths {
+		num, err := strconv.Atoi(v)
+		if err != nil {
+			return nil, err
+		}
+
+		ids[i] = num
+	}
+
+	return ids, nil
+
+}
+
+func (conn *RichZookeeperConnection) ListTopics() ([]string, error) {
+
+	topics, _, err := conn.Children("/toy-car/brokers/topics")
+	if err != nil {
+		return nil, err
+	}
+
+	return topics, nil
+
+}
+
+func (conn *RichZookeeperConnection) ListParitionIds(topic string) ([]int, error) {
+
+	partitionIds, _, err := conn.Children(fmt.Sprintf("/toy-car/brokers/topics/%s/partitions", topic))
+	if err != nil {
+		return nil, err
+	}
+
+	arr := make([]int, len(partitionIds))
+	for i, _ := range partitionIds {
+		num, err := strconv.Atoi(partitionIds[i])
+		if err != nil {
+			return nil, err
+		}
+
+		arr[i] = num
+	}
+
+	return arr, nil
+
+}
+
+func (conn *RichZookeeperConnection) GetParititionStateVar(ps *api.PartitionState, topic string, partitionId int) error {
+
+	bytes, _, err := conn.Get(GetPartitionStateZookeeperPath(topic, partitionId))
+	if err != nil {
+		return err
+	}
+	err = proto.Unmarshal(bytes, ps)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func (conn *RichZookeeperConnection) GetParititionState(topic string, partitionId int) (*api.PartitionState, error) {
+
+	ps := &api.PartitionState{}
+	err := conn.GetParititionStateVar(ps, topic, partitionId)
+	if err != nil {
+		return nil, err
+	}
+
+	return ps, nil
 
 }

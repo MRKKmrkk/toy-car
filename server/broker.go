@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	logger "log"
 	"path"
 	"strconv"
@@ -205,5 +206,33 @@ func (broker *Broker) StartUp() error {
 	// started to listen to controller
 	go broker.watchOnController()
 	return nil
+
+}
+
+// only broker of controller run this method
+// monitor: /toy-car/brokers/ids , change topic metadata and partition state when broker leaved
+func (broker *Broker) maintainISR() error {
+
+	// todo : maybe need return error here
+	//if !broker.IsController {
+	//	return nil
+	//}
+
+	_, _, ch, err := broker.zkConn.ChildrenW("/toy-car/brokers/ids")
+	if err != nil {
+		return err
+	}
+
+	for {
+		select {
+		case event := <-ch:
+			if event.Type == zk.EventNodeChildrenChanged {
+				fmt.Println(event.State.String())
+				fmt.Println(event.Path)
+				fmt.Printf("event: %v\n", event)
+			}
+
+		}
+	}
 
 }
