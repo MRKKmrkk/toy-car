@@ -1665,3 +1665,128 @@
 2023-03-26 18:08:42,214 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /0:0:0:0:0:0:0:1:37940
 2023-03-26 18:08:42,216 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /0:0:0:0:0:0:0:1:37940
 2023-03-26 18:08:42,219 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x10001b7e87d00c0 with negotiated timeout 30000 for client /0:0:0:0:0:0:0:1:37940
+2023-03-26 19:45:32,130 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x10001b7e87d009b, likely client has closed socket
+2023-03-26 19:45:32,131 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /127.0.0.1:42684 which had sessionid 0x10001b7e87d009b
+2023-03-26 19:45:57,979 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x10001b7e87d009b, timeout of 30000ms exceeded
+2023-03-26 19:45:57,979 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x10001b7e87d009b
+2023-03-26 20:20:08,802 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x10001b7e87d00c0, likely client has closed socket
+2023-03-26 20:20:08,803 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /0:0:0:0:0:0:0:1:37940 which had sessionid 0x10001b7e87d00c0
+2023-03-26 20:20:35,979 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x10001b7e87d00c0, timeout of 30000ms exceeded
+2023-03-26 20:20:35,979 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x10001b7e87d00c0
+2023-03-27 19:32:06,009 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /118.193.103.133:65291
+2023-03-27 19:32:16,932 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x0, likely client has closed socket
+2023-03-27 19:32:16,932 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /118.193.103.133:65291 (no session established for client)
+2023-03-27 19:43:27,097 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:36490
+2023-03-27 19:43:33,092 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 218762506
+2023-03-27 19:43:33,092 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:36490 (no session established for client)
+2023-03-27 19:43:33,157 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37290
+2023-03-27 19:43:33,158 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195725856
+2023-03-27 19:43:33,158 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37290 (no session established for client)
+2023-03-27 19:43:33,226 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37294
+2023-03-27 19:43:33,227 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1330664521
+2023-03-27 19:43:33,227 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37294 (no session established for client)
+2023-03-27 19:43:33,298 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37312
+2023-03-27 19:43:33,298 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1330664521
+2023-03-27 19:43:33,298 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37312 (no session established for client)
+2023-03-27 19:43:33,362 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37322
+2023-03-27 19:43:33,362 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error -2147483608
+2023-03-27 19:43:33,362 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37322 (no session established for client)
+2023-03-27 19:43:33,427 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37330
+2023-03-27 19:43:33,428 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1966086
+2023-03-27 19:43:33,428 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37330 (no session established for client)
+2023-03-27 19:43:33,490 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37336
+2023-03-27 19:43:38,491 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x0, likely client has closed socket
+2023-03-27 19:43:38,491 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37336 (no session established for client)
+2023-03-27 19:43:38,524 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37542
+2023-03-27 19:43:38,525 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1212501072
+2023-03-27 19:43:38,525 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37542 (no session established for client)
+2023-03-27 19:43:38,590 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37548
+2023-03-27 19:43:38,590 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295360
+2023-03-27 19:43:38,590 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37548 (no session established for client)
+2023-03-27 19:43:38,659 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37556
+2023-03-27 19:43:38,660 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 50331690
+2023-03-27 19:43:38,660 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37556 (no session established for client)
+2023-03-27 19:43:38,723 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37580
+2023-03-27 19:43:38,724 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295360
+2023-03-27 19:43:38,724 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37580 (no session established for client)
+2023-03-27 19:43:38,807 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37584
+2023-03-27 19:43:38,808 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Unreasonable length = 83906688
+2023-03-27 19:43:38,808 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37584 (no session established for client)
+2023-03-27 19:43:38,883 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37598
+2023-03-27 19:43:38,884 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: null
+2023-03-27 19:43:38,884 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37598 (no session established for client)
+2023-03-27 19:43:38,956 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37604
+2023-03-27 19:43:38,957 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1811942144
+2023-03-27 19:43:38,957 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37604 (no session established for client)
+2023-03-27 19:43:39,025 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37606
+2023-03-27 19:43:39,026 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195725856
+2023-03-27 19:43:39,026 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37606 (no session established for client)
+2023-03-27 19:43:39,088 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37610
+2023-03-27 19:43:39,089 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 23356774
+2023-03-27 19:43:39,089 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37610 (no session established for client)
+2023-03-27 19:43:39,168 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37614
+2023-03-27 19:43:39,169 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 813957120
+2023-03-27 19:43:39,169 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37614 (no session established for client)
+2023-03-27 19:43:39,239 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37620
+2023-03-27 19:43:39,240 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 806093313
+2023-03-27 19:43:39,240 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37620 (no session established for client)
+2023-03-27 19:43:39,312 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37622
+2023-03-27 19:43:39,313 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1330664521
+2023-03-27 19:43:39,313 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37622 (no session established for client)
+2023-03-27 19:43:39,372 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37630
+2023-03-27 19:43:39,373 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1414417744
+2023-03-27 19:43:39,373 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37630 (no session established for client)
+2023-03-27 19:43:39,443 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37636
+2023-03-27 19:43:39,444 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 50331659
+2023-03-27 19:43:39,444 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37636 (no session established for client)
+2023-03-27 19:43:39,525 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37640
+2023-03-27 19:43:39,526 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1148019796
+2023-03-27 19:43:39,526 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37640 (no session established for client)
+2023-03-27 19:43:39,597 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37642
+2023-03-27 19:43:39,598 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 973078528
+2023-03-27 19:43:39,598 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37642 (no session established for client)
+2023-03-27 19:43:39,678 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37644
+2023-03-27 19:43:39,679 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1246907721
+2023-03-27 19:43:39,679 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37644 (no session established for client)
+2023-03-27 19:43:39,749 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37648
+2023-03-27 19:43:39,750 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 16777469
+2023-03-27 19:43:39,750 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37648 (no session established for client)
+2023-03-27 19:43:39,812 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37662
+2023-03-27 19:43:39,812 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 5898240
+2023-03-27 19:43:39,812 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37662 (no session established for client)
+2023-03-27 19:43:39,873 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37690
+2023-03-27 19:43:39,874 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 302055476
+2023-03-27 19:43:39,874 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37690 (no session established for client)
+2023-03-27 19:43:39,953 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:37694
+2023-03-27 19:43:44,958 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x0, likely client has closed socket
+2023-03-27 19:43:44,959 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:37694 (no session established for client)
+2023-03-27 19:43:44,990 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:38082
+2023-03-27 19:43:44,990 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195986768
+2023-03-27 19:43:44,990 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:38082 (no session established for client)
+2023-03-27 19:44:05,735 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:39716
+2023-03-27 19:44:15,750 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x0, likely client has closed socket
+2023-03-27 19:44:15,750 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:39716 (no session established for client)
+2023-03-27 19:44:15,781 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:40318
+2023-03-27 19:44:15,782 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295618
+2023-03-27 19:44:15,782 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:40318 (no session established for client)
+2023-03-27 19:44:25,846 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:1002
+2023-03-27 19:44:25,857 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error -2147483608
+2023-03-27 19:44:25,857 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:1002 (no session established for client)
+2023-03-27 19:44:26,155 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:41360
+2023-03-27 19:44:36,159 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x0, likely client has closed socket
+2023-03-27 19:44:36,159 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:41360 (no session established for client)
+2023-03-27 19:44:36,191 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:42814
+2023-03-27 19:44:36,193 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295618
+2023-03-27 19:44:36,193 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:42814 (no session established for client)
+2023-03-27 19:44:36,308 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:42818
+2023-03-27 19:44:36,320 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295616
+2023-03-27 19:44:36,320 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:42818 (no session established for client)
+2023-03-27 19:44:36,418 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:42822
+2023-03-27 19:44:36,418 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195725856
+2023-03-27 19:44:36,418 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:42822 (no session established for client)
+2023-03-27 19:44:36,497 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /39.98.231.121:42826
+2023-03-27 19:44:36,497 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295616
+2023-03-27 19:44:36,497 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /39.98.231.121:42826 (no session established for client)
+2023-03-27 21:15:25,581 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /87.251.64.11:64369
+2023-03-27 21:15:25,581 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 302055518
+2023-03-27 21:15:25,581 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /87.251.64.11:64369 (no session established for client)
