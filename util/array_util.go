@@ -10,3 +10,16 @@ func ArrayIntToInt32(arr []int) []int32 {
 	return newArr
 
 }
+
+func RemoveElementOnInt32Array(arr []int32, ele int32) []int32 {
+
+	newArr := make([]int32, 0)
+	for _, v := range arr {
+		if v != ele {
+			newArr = append(newArr, v)
+		}
+	}
+
+	return newArr
+
+}

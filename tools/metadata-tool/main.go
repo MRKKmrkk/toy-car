@@ -57,6 +57,13 @@ func getTopicInformation(conn *zookeeper.RichZookeeperConnection, content *strin
 	for _, topic := range topics {
 
 		*content += fmt.Sprintf("%s:\n", topic)
+
+		meta, err := conn.GetTopicMetadata(topic)
+		if err != nil {
+			return err
+		}
+		*content += fmt.Sprintf("%v\n", meta.Partitions)
+
 		paritionIds, _, err := conn.Children(fmt.Sprintf("/toy-car/brokers/topics/%s/partitions", topic))
 		if err != nil {
 			return err
