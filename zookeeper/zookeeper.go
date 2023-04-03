@@ -31,6 +31,12 @@ func GetPartitionStateZookeeperPath(topic string, paritionId int) string {
 
 }
 
+func GetTopicMetadataZookeeperPath(topic string) string {
+
+	return fmt.Sprintf("/toy-car/brokers/topics/%s", topic)
+
+}
+
 const FlagLasting = 0
 
 type RichZookeeperConnection struct {
@@ -234,5 +240,77 @@ func (conn *RichZookeeperConnection) GetParititionState(topic string, partitionI
 	}
 
 	return ps, nil
+
+}
+func (conn *RichZookeeperConnection) GetTopicMetadataVar(meta *api.TopicMetaData, topic string) error {
+
+	bytes, _, err := conn.Get(GetTopicMetadataZookeeperPath(topic))
+	if err != nil {
+		return err
+	}
+	err = proto.Unmarshal(bytes, meta)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func (conn *RichZookeeperConnection) GetTopicMetadata(topic string) (*api.TopicMetaData, error) {
+
+	meta := &api.TopicMetaData{}
+	err := conn.GetTopicMetadataVar(meta, topic)
+	if err != nil {
+		return nil, err
+	}
+
+	return meta, nil
+
+}
+
+func (conn *RichZookeeperConnection) SetTopicMetadataVar(topic string, meta *api.TopicMetaData) error {
+
+	metaPath := GetTopicMetadataZookeeperPath(topic)
+	_, stat, err := conn.Get(metaPath)
+	if err != nil {
+		return err
+	}
+
+	bytes, err := proto.Marshal(meta)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Set(
+		metaPath,
+		bytes,
+		stat.Version,
+	)
+	return err
+
+}
+
+func (conn *RichZookeeperConnection) SetPartitionStateVar(topic string, partitionId int, state *api.PartitionState) error {
+
+	statePath := GetPartitionStateZookeeperPath(topic, partitionId)
+	_, stat, err := conn.Get(statePath)
+	if err != nil {
+		return err
+	}
+
+	bytes, err := proto.Marshal(state)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Set(
+		statePath,
+		bytes,
+		stat.Version,
+	)
+
+	return err
 
 }
