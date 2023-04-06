@@ -160,9 +160,16 @@ func (controller *ToyCarController) deleteIdFromParitionState(id int) error {
 			}
 
 			ps.ISR = util.RemoveElementOnInt32Array(ps.ISR, int32(id))
+			var leaderId int32
+			if len(ps.ISR) == 0 {
+				leaderId = -1
+			} else {
+				leaderId = ps.ISR[0]
+			}
+
 			if ps.GetLeader() == int32(id) {
-				ps.Leader = int32(id)
-				logger.Printf("change {topic: %s parition: %d} leader to %d\n", topic, pid, id)
+				ps.Leader = leaderId
+				logger.Printf("change {topic: %s parition: %d} leader to %d\n", topic, pid, leaderId)
 			}
 
 			err = controller.zkConn.SetPartitionStateVar(topic, pid, ps)
