@@ -288,6 +288,7 @@ func (conn *RichZookeeperConnection) SetTopicMetadataVar(topic string, meta *api
 		bytes,
 		stat.Version,
 	)
+
 	return err
 
 }

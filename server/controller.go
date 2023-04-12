@@ -185,6 +185,32 @@ func (controller *ToyCarController) deleteIdFromParitionState(id int) error {
 
 }
 
+func (controller *ToyCarController) deleteIdFromTopicMetaData(id int) error {
+
+	metadata := &api.TopicMetaData{}
+	for topic, pids := range controller.metaDataIndex.cache[id] {
+
+		err := controller.zkConn.GetTopicMetadataVar(metadata, topic)
+		if err != nil {
+			return err
+		}
+
+		for _, pid := range pids {
+
+			metadata.Partitions[int32(pid)].BrokerId = util.RemoveElementOnInt32Array(
+				metadata.Partitions[int32(pid)].BrokerId,
+				int32(id),
+			)
+
+			controller.zkConn.SetTopicMetadataVar(topic, metadata)
+		}
+
+	}
+
+	return nil
+
+}
+
 func (controller *ToyCarController) idsMonitor() {
 
 	_, _, ch, err := controller.zkConn.ChildrenW("/toy-car/brokers/ids")
@@ -210,9 +236,16 @@ func (controller *ToyCarController) idsMonitor() {
 					logger.Printf("broker: %d out offline", id)
 
 					// update topic metadata
+					err = controller.deleteIdFromTopicMetaData(id)
+					if err != nil {
+						panic(err)
+					}
 
 					// update parition state
-					controller.deleteIdFromParitionState(id)
+					err = controller.deleteIdFromParitionState(id)
+					if err != nil {
+						panic(err)
+					}
 				}
 			}
 			if event.Type == zk.EventNotWatching {
