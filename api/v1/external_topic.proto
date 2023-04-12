@@ -1,0 +1,16 @@
+// We use External Topic to storage some metadata such as LEO(Log End Offsets) and consume group
+// we will not implement external topic on toy-car 0.1, we will use a simple file to replace it, but we want to update it to actullay external topic on next version (toy-car 0.2) like kafka
+
+syntax = "proto3";
+
+package log.v1;
+
+//option go_package = "github.com/travisjeffery/api/log_v1";
+option go_package = "./";
+
+message ExternalTopic{
+        // LEO
+        map<string, int64> LogEndOffsets= 1;
+}
+
+

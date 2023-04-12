@@ -202,7 +202,12 @@ func (controller *ToyCarController) deleteIdFromTopicMetaData(id int) error {
 				int32(id),
 			)
 
-			controller.zkConn.SetTopicMetadataVar(topic, metadata)
+			err = controller.zkConn.SetTopicMetadataVar(topic, metadata)
+			if err != nil {
+				return err
+			}
+
+			logger.Printf("change topic metadata{topic: %s parition: %d}", topic, pid)
 		}
 
 	}
@@ -215,7 +220,7 @@ func (controller *ToyCarController) idsMonitor() {
 
 	_, _, ch, err := controller.zkConn.ChildrenW("/toy-car/brokers/ids")
 	if err != nil {
-		panic(err)
+		logger.Fatal(err)
 	}
 
 	for {
@@ -228,7 +233,7 @@ func (controller *ToyCarController) idsMonitor() {
 			if event.Type == zk.EventNodeChildrenChanged {
 				deadIds, err := controller.ListDeadNodeIds()
 				if err != nil {
-					panic(err)
+					logger.Fatal(err)
 				}
 
 				// update metadata
@@ -238,13 +243,13 @@ func (controller *ToyCarController) idsMonitor() {
 					// update topic metadata
 					err = controller.deleteIdFromTopicMetaData(id)
 					if err != nil {
-						panic(err)
+						logger.Fatal(err)
 					}
 
 					// update parition state
 					err = controller.deleteIdFromParitionState(id)
 					if err != nil {
-						panic(err)
+						logger.Fatal(err)
 					}
 				}
 			}

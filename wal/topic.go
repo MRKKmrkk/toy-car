@@ -194,6 +194,15 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		return nil, err
 	}
 
+	//os.OpenFile(
+	//	path.Join(config.LogDir, "__consumer_offsets"),
+	//	os.O_RDWR|os.O_CREATE,
+	//	0644,
+	//)
+	//if err != nil {
+	//	return nil, err
+	//}
+
 	return topic, nil
 
 }
@@ -239,7 +248,8 @@ func NewTopic(topicName string, config *config.Config) (*Topic, error) {
 
 	}
 
-	return topic, nil
+	return topic, err
+
 }
 
 func (t *Topic) Close() error {

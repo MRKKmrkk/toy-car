@@ -836,3 +836,5 @@
 2023-04-12 10:21:24,126 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:43726 which had sessionid 0x1001b6c72350068
 2023-04-12 10:21:39,410 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x1001b6c72350065, likely client has closed socket
 2023-04-12 10:21:39,410 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:43706 which had sessionid 0x1001b6c72350065
+2023-04-12 10:21:44,322 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x1001b6c72350065, timeout of 5000ms exceeded
+2023-04-12 10:21:44,322 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c72350065
