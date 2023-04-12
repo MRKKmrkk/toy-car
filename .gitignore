@@ -1,3 +1,6 @@
 test/*
+bin/*
 *_test.go
 demo.*
+*.bak
+Makefile

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+make
+
+for file in $(ls | grep .go)
+do
+        sed -i 's/^package __/package log_v1/g' $file
+done
+

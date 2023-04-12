@@ -13,10 +13,14 @@ type Config struct {
 		MaxStoreBytes uint64
 	}
 	Server struct {
+		BrokerId                int64
 		ListenerAddress         string
 		ListenerPort            string
 		ZookeeperConnects       []string
 		ZookeeperTimeoutSeconds int
+	}
+	Replica struct {
+		AllocationPolicy string
 	}
 }
 

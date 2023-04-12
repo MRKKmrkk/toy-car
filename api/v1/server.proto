@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package log.v1;
+
+option go_package = "./";
+
+message ControllerMetaData {
+  int64 BrokerId = 1;
+  uint64  Timestamp= 2;
+}
+
+message BrokerMetaData {
+  int64 BrokerId = 1;
+  string ListenerAddress = 2;
+  string ListenerPort = 3;
+}
+
+message BrokerIds{
+  repeated int32 BrokerId = 1;
+}
+
+message TopicMetaData {
+  int32 Version = 1;
+  map<int32, BrokerIds> Partitions = 2;
+}
+
+message PartitionState {
+  int64 ControllerEpoch = 1;
+  int32 Leader = 2;
+  int32 Version = 3;
+  int64 LeaderEpoch = 4;
+  repeated int32 ISR = 5;
+}

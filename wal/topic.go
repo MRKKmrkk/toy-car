@@ -4,10 +4,17 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 	api "toy-car/api/v1"
 	"toy-car/config"
+	"toy-car/util"
+	"toy-car/zookeeper"
+
+	"github.com/golang/protobuf/proto"
+	"github.com/samuel/go-zookeeper/zk"
 )
 
 type Topic struct {
@@ -30,12 +37,124 @@ func listLogDir(config *config.Config) ([]fs.FileInfo, error) {
 	return files, nil
 }
 
-func CreateTopic(topicName string, partitionNum uint64, config *config.Config) (*Topic, error) {
+func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum int) ([]int, error) {
+
+	c, err := config.NewConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	ids, err := conn.ListBrokerId()
+	if err != nil {
+		return nil, err
+	}
+
+	switch c.Replica.AllocationPolicy {
+	case "random":
+		r := rand.New(rand.NewSource(time.Now().UnixNano()))
+		r.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
+	}
+
+	return ids[:replicaNum], nil
+
+}
+
+// log parititon state in zookeeper
+func registParititionStateMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, partitionId int, ids []int) error {
+
+	leader := int32(-1)
+	if len(ids) != 0 {
+		leader = int32(ids[0])
+	}
+
+	state := &api.PartitionState{
+		ControllerEpoch: 0,
+		Version:         1,
+		ISR:             util.ArrayIntToInt32(ids),
+		Leader:          leader,
+	}
+	bytes, err := proto.Marshal(state)
+	if err != nil {
+		return err
+	}
+
+	err = conn.RecurseCreate(
+		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, partitionId),
+		zookeeper.FlagLasting,
+		zk.WorldACL(zk.PermAll),
+	)
+	if err != nil && err.Error() != "zk: node already exists" {
+		return err
+	}
+
+	_, err = conn.Set(
+		fmt.Sprintf("/toy-car/brokers/topics/%s/partitions/%d/state", topicName, partitionId),
+		bytes,
+		-1,
+	)
+
+	return err
+
+}
+
+func registTopicMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, topicMetaData *api.TopicMetaData) error {
+
+	// log topic information in zookeeper
+	bytes, err := proto.Marshal(topicMetaData)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Create(
+		fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
+		bytes,
+		zookeeper.FlagLasting,
+		zk.WorldACL(zk.PermAll),
+	)
+
+	if err == nil {
+		return nil
+	}
+
+	if err.Error() == "zk: node already exists" {
+		_, err = conn.Set(
+			fmt.Sprintf("/toy-car/brokers/topics/%s", topicName),
+			bytes,
+			-1,
+		)
+
+		if err == nil {
+			return nil
+		}
+	} else {
+		return err
+	}
+
+	return err
+
+}
+
+func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *config.Config) (*Topic, error) {
+
+	// need checkout replicaNum
+	if replicaNum < 1 {
+		return nil, fmt.Errorf("replica number can not smaller than 1, but got %d", replicaNum)
+	}
 
 	_, err := listLogDir(config)
 	if err != nil {
 		return nil, err
 	}
+
+	conn, err := zookeeper.GetOrCreateZookeeperConnection()
+	if err != nil {
+		return nil, err
+	}
+
+	topicMetaData := &api.TopicMetaData{
+		Version: 1,
+	}
+	topicMetaData.Partitions = make(map[int32]*api.BrokerIds)
 
 	topic := &Topic{
 		topicName:  topicName,
@@ -49,6 +168,30 @@ func CreateTopic(topicName string, partitionNum uint64, config *config.Config) (
 			return nil, err
 		}
 		topic.partitions[i] = p
+
+		// allocate repplicates to topic
+		ids, err := allocateReplicaByPolicy(conn, replicaNum)
+		if err != nil {
+			return nil, err
+		}
+
+		topicMetaData.Partitions[int32(i)] = &api.BrokerIds{}
+		for _, v := range ids {
+			topicMetaData.Partitions[int32(i)].BrokerId = append(topicMetaData.Partitions[int32(i)].BrokerId, int32(v))
+		}
+
+		// log parititon state in zookeeper
+		err = registParititionStateMetaData(conn, topicName, int(i), ids)
+		if err != nil {
+			return nil, err
+		}
+
+	}
+
+	// log topic information in zookeeper
+	err = registTopicMetaData(conn, topicName, topicMetaData)
+	if err != nil {
+		return nil, err
 	}
 
 	return topic, nil

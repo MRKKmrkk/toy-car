@@ -4,7 +4,7 @@
 // 	protoc        v3.11.2
 // source: log.proto
 
-package __
+package log_v1
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -20,6 +20,234 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ProduceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Msg         *Message `protobuf:"bytes,1,opt,name=msg,proto3" json:"msg,omitempty"`
+	Topic       string   `protobuf:"bytes,2,opt,name=Topic,proto3" json:"Topic,omitempty"`
+	PartitionId uint64   `protobuf:"varint,3,opt,name=PartitionId,proto3" json:"PartitionId,omitempty"`
+	Ack         uint32   `protobuf:"varint,4,opt,name=Ack,proto3" json:"Ack,omitempty"`
+}
+
+func (x *ProduceRequest) Reset() {
+	*x = ProduceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_log_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProduceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProduceRequest) ProtoMessage() {}
+
+func (x *ProduceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_log_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProduceRequest.ProtoReflect.Descriptor instead.
+func (*ProduceRequest) Descriptor() ([]byte, []int) {
+	return file_log_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *ProduceRequest) GetMsg() *Message {
+	if x != nil {
+		return x.Msg
+	}
+	return nil
+}
+
+func (x *ProduceRequest) GetTopic() string {
+	if x != nil {
+		return x.Topic
+	}
+	return ""
+}
+
+func (x *ProduceRequest) GetPartitionId() uint64 {
+	if x != nil {
+		return x.PartitionId
+	}
+	return 0
+}
+
+func (x *ProduceRequest) GetAck() uint32 {
+	if x != nil {
+		return x.Ack
+	}
+	return 0
+}
+
+type ProduceResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Offset uint64 `protobuf:"varint,1,opt,name=offset,proto3" json:"offset,omitempty"`
+}
+
+func (x *ProduceResponse) Reset() {
+	*x = ProduceResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_log_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProduceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProduceResponse) ProtoMessage() {}
+
+func (x *ProduceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_log_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProduceResponse.ProtoReflect.Descriptor instead.
+func (*ProduceResponse) Descriptor() ([]byte, []int) {
+	return file_log_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ProduceResponse) GetOffset() uint64 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+type ConsumeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Topic       string `protobuf:"bytes,1,opt,name=Topic,proto3" json:"Topic,omitempty"`
+	Offset      uint64 `protobuf:"varint,2,opt,name=offset,proto3" json:"offset,omitempty"`
+	PartitionId uint64 `protobuf:"varint,3,opt,name=PartitionId,proto3" json:"PartitionId,omitempty"`
+}
+
+func (x *ConsumeRequest) Reset() {
+	*x = ConsumeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_log_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ConsumeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConsumeRequest) ProtoMessage() {}
+
+func (x *ConsumeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_log_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConsumeRequest.ProtoReflect.Descriptor instead.
+func (*ConsumeRequest) Descriptor() ([]byte, []int) {
+	return file_log_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ConsumeRequest) GetTopic() string {
+	if x != nil {
+		return x.Topic
+	}
+	return ""
+}
+
+func (x *ConsumeRequest) GetOffset() uint64 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+func (x *ConsumeRequest) GetPartitionId() uint64 {
+	if x != nil {
+		return x.PartitionId
+	}
+	return 0
+}
+
+type ConsumeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Msg *Message `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+}
+
+func (x *ConsumeResponse) Reset() {
+	*x = ConsumeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_log_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ConsumeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConsumeResponse) ProtoMessage() {}
+
+func (x *ConsumeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_log_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConsumeResponse.ProtoReflect.Descriptor instead.
+func (*ConsumeResponse) Descriptor() ([]byte, []int) {
+	return file_log_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ConsumeResponse) GetMsg() *Message {
+	if x != nil {
+		return x.Msg
+	}
+	return nil
+}
+
 type Message struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -33,7 +261,7 @@ type Message struct {
 func (x *Message) Reset() {
 	*x = Message{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_log_proto_msgTypes[0]
+		mi := &file_log_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -46,7 +274,7 @@ func (x *Message) String() string {
 func (*Message) ProtoMessage() {}
 
 func (x *Message) ProtoReflect() protoreflect.Message {
-	mi := &file_log_proto_msgTypes[0]
+	mi := &file_log_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +287,7 @@ func (x *Message) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Message.ProtoReflect.Descriptor instead.
 func (*Message) Descriptor() ([]byte, []int) {
-	return file_log_proto_rawDescGZIP(), []int{0}
+	return file_log_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Message) GetKey() string {
@@ -87,12 +315,45 @@ var File_log_proto protoreflect.FileDescriptor
 
 var file_log_proto_rawDesc = []byte{
 	0x0a, 0x09, 0x6c, 0x6f, 0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x06, 0x6c, 0x6f, 0x67,
-	0x2e, 0x76, 0x31, 0x22, 0x49, 0x0a, 0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x10,
-	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
-	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x42, 0x04,
-	0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x76, 0x31, 0x22, 0x7d, 0x0a, 0x0e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x54, 0x6f, 0x70, 0x69,
+	0x63, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x54, 0x6f, 0x70, 0x69, 0x63, 0x12, 0x20,
+	0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64,
+	0x12, 0x10, 0x0a, 0x03, 0x41, 0x63, 0x6b, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03, 0x41,
+	0x63, 0x6b, 0x22, 0x29, 0x0a, 0x0f, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x22, 0x60, 0x0a,
+	0x0e, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x14, 0x0a, 0x05, 0x54, 0x6f, 0x70, 0x69, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x54, 0x6f, 0x70, 0x69, 0x63, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x20, 0x0a,
+	0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x22,
+	0x34, 0x0a, 0x0f, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x21, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x0f, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x52, 0x03, 0x6d, 0x73, 0x67, 0x22, 0x49, 0x0a, 0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b,
+	0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73,
+	0x65, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74,
+	0x32, 0xc9, 0x01, 0x0a, 0x03, 0x4c, 0x6f, 0x67, 0x12, 0x3c, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x65, 0x12, 0x16, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x6c, 0x6f,
+	0x67, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x07, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d,
+	0x65, 0x12, 0x16, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x73, 0x75,
+	0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x6c, 0x6f, 0x67, 0x2e,
+	0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x0d, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x53,
+	0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x16, 0x2e, 0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x50,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e,
+	0x6c, 0x6f, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x42, 0x04, 0x5a, 0x02,
+	0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -107,16 +368,28 @@ func file_log_proto_rawDescGZIP() []byte {
 	return file_log_proto_rawDescData
 }
 
-var file_log_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_log_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_log_proto_goTypes = []interface{}{
-	(*Message)(nil), // 0: log.v1.Message
+	(*ProduceRequest)(nil),  // 0: log.v1.ProduceRequest
+	(*ProduceResponse)(nil), // 1: log.v1.ProduceResponse
+	(*ConsumeRequest)(nil),  // 2: log.v1.ConsumeRequest
+	(*ConsumeResponse)(nil), // 3: log.v1.ConsumeResponse
+	(*Message)(nil),         // 4: log.v1.Message
 }
 var file_log_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4, // 0: log.v1.ProduceRequest.msg:type_name -> log.v1.Message
+	4, // 1: log.v1.ConsumeResponse.msg:type_name -> log.v1.Message
+	0, // 2: log.v1.Log.Produce:input_type -> log.v1.ProduceRequest
+	2, // 3: log.v1.Log.Consume:input_type -> log.v1.ConsumeRequest
+	0, // 4: log.v1.Log.ProduceStream:input_type -> log.v1.ProduceRequest
+	1, // 5: log.v1.Log.Produce:output_type -> log.v1.ProduceResponse
+	3, // 6: log.v1.Log.Consume:output_type -> log.v1.ConsumeResponse
+	1, // 7: log.v1.Log.ProduceStream:output_type -> log.v1.ProduceResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_log_proto_init() }
@@ -126,6 +399,54 @@ func file_log_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_log_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProduceRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_log_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProduceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_log_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ConsumeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_log_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ConsumeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_log_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Message); i {
 			case 0:
 				return &v.state
@@ -144,9 +465,9 @@ func file_log_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_log_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   5,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_log_proto_goTypes,
 		DependencyIndexes: file_log_proto_depIdxs,
