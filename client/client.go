@@ -13,10 +13,10 @@ type ToyCarClient struct {
 	context        context.Context
 }
 
-func NewToyCarClient(topic string, host string) (*ToyCarClient, error) {
+func NewToyCarClient(toyCarUri string) (*ToyCarClient, error) {
 
 	clientOptions := []grpc.DialOption{grpc.WithInsecure()}
-	cc, err := grpc.Dial(host, clientOptions...)
+	cc, err := grpc.Dial(toyCarUri, clientOptions...)
 	if err != nil {
 		return nil, err
 	}
