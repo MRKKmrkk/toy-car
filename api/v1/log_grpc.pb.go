@@ -25,6 +25,8 @@ type LogClient interface {
 	//  rpc ConsumeStream(ConsumeRequest) returns (stream ConsumeResponse) {}
 	// stream function at both side
 	ProduceStream(ctx context.Context, opts ...grpc.CallOption) (Log_ProduceStreamClient, error)
+	// create topic
+	CreateTopic(ctx context.Context, in *CreateTopicRequest, opts ...grpc.CallOption) (*CreateTopicResponse, error)
 }
 
 type logClient struct {
@@ -84,6 +86,15 @@ func (x *logProduceStreamClient) Recv() (*ProduceResponse, error) {
 	return m, nil
 }
 
+func (c *logClient) CreateTopic(ctx context.Context, in *CreateTopicRequest, opts ...grpc.CallOption) (*CreateTopicResponse, error) {
+	out := new(CreateTopicResponse)
+	err := c.cc.Invoke(ctx, "/log.v1.Log/CreateTopic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LogServer is the server API for Log service.
 // All implementations must embed UnimplementedLogServer
 // for forward compatibility
@@ -96,6 +107,8 @@ type LogServer interface {
 	//  rpc ConsumeStream(ConsumeRequest) returns (stream ConsumeResponse) {}
 	// stream function at both side
 	ProduceStream(Log_ProduceStreamServer) error
+	// create topic
+	CreateTopic(context.Context, *CreateTopicRequest) (*CreateTopicResponse, error)
 	mustEmbedUnimplementedLogServer()
 }
 
@@ -111,6 +124,9 @@ func (UnimplementedLogServer) Consume(context.Context, *ConsumeRequest) (*Consum
 }
 func (UnimplementedLogServer) ProduceStream(Log_ProduceStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method ProduceStream not implemented")
+}
+func (UnimplementedLogServer) CreateTopic(context.Context, *CreateTopicRequest) (*CreateTopicResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTopic not implemented")
 }
 func (UnimplementedLogServer) mustEmbedUnimplementedLogServer() {}
 
@@ -187,6 +203,24 @@ func (x *logProduceStreamServer) Recv() (*ProduceRequest, error) {
 	return m, nil
 }
 
+func _Log_CreateTopic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTopicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LogServer).CreateTopic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/log.v1.Log/CreateTopic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LogServer).CreateTopic(ctx, req.(*CreateTopicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Log_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "log.v1.Log",
 	HandlerType: (*LogServer)(nil),
@@ -198,6 +232,10 @@ var _Log_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Consume",
 			Handler:    _Log_Consume_Handler,
+		},
+		{
+			MethodName: "CreateTopic",
+			Handler:    _Log_CreateTopic_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

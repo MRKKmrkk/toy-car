@@ -37,7 +37,7 @@ func listLogDir(config *config.Config) ([]fs.FileInfo, error) {
 	return files, nil
 }
 
-func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum int) ([]int, error) {
+func AllocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum int) ([]int, error) {
 
 	c, err := config.NewConfig()
 	if err != nil {
@@ -60,7 +60,7 @@ func allocateReplicaByPolicy(conn *zookeeper.RichZookeeperConnection, replicaNum
 }
 
 // log parititon state in zookeeper
-func registParititionStateMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, partitionId int, ids []int) error {
+func RegistParititionStateMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, partitionId int, ids []int) error {
 
 	leader := int32(-1)
 	if len(ids) != 0 {
@@ -97,7 +97,7 @@ func registParititionStateMetaData(conn *zookeeper.RichZookeeperConnection, topi
 
 }
 
-func registTopicMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, topicMetaData *api.TopicMetaData) error {
+func RegistTopicMetaData(conn *zookeeper.RichZookeeperConnection, topicName string, topicMetaData *api.TopicMetaData) error {
 
 	// log topic information in zookeeper
 	bytes, err := proto.Marshal(topicMetaData)
@@ -141,10 +141,10 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		return nil, fmt.Errorf("replica number can not smaller than 1, but got %d", replicaNum)
 	}
 
-	_, err := listLogDir(config)
-	if err != nil {
-		return nil, err
-	}
+	//_, err := listLogDir(config)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	conn, err := zookeeper.GetOrCreateZookeeperConnection()
 	if err != nil {
@@ -170,7 +170,7 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		topic.partitions[i] = p
 
 		// allocate repplicates to topic
-		ids, err := allocateReplicaByPolicy(conn, replicaNum)
+		ids, err := AllocateReplicaByPolicy(conn, replicaNum)
 		if err != nil {
 			return nil, err
 		}
@@ -181,7 +181,7 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 		}
 
 		// log parititon state in zookeeper
-		err = registParititionStateMetaData(conn, topicName, int(i), ids)
+		err = RegistParititionStateMetaData(conn, topicName, int(i), ids)
 		if err != nil {
 			return nil, err
 		}
@@ -189,7 +189,7 @@ func CreateTopic(topicName string, partitionNum uint64, replicaNum int, config *
 	}
 
 	// log topic information in zookeeper
-	err = registTopicMetaData(conn, topicName, topicMetaData)
+	err = RegistTopicMetaData(conn, topicName, topicMetaData)
 	if err != nil {
 		return nil, err
 	}

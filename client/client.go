@@ -9,8 +9,8 @@ import (
 
 type ToyCarClient struct {
 	grpcClientConn *grpc.ClientConn
-	client         api.LogClient
-	context        context.Context
+	Client         api.LogClient
+	Context        context.Context
 }
 
 func NewToyCarClient(toyCarUri string) (*ToyCarClient, error) {
@@ -23,8 +23,8 @@ func NewToyCarClient(toyCarUri string) (*ToyCarClient, error) {
 
 	return &ToyCarClient{
 		grpcClientConn: cc,
-		client:         api.NewLogClient(cc),
-		context:        context.Background(),
+		Client:         api.NewLogClient(cc),
+		Context:        context.Background(),
 	}, nil
 
 }

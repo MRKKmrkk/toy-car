@@ -15,6 +15,9 @@ service Log {
 //  rpc ConsumeStream(ConsumeRequest) returns (stream ConsumeResponse) {}
   // stream function at both side
   rpc ProduceStream(stream ProduceRequest) returns (stream ProduceResponse) {}
+  
+  // create topic
+  rpc CreateTopic(CreateTopicRequest) returns (CreateTopicResponse) {}
 }
 
 message ProduceRequest  {
@@ -44,4 +47,12 @@ message Message {
 	uint64 offset = 3;
 }
 
+message CreateTopicRequest{
+	string Topic = 1;
+	uint64 Partitions = 2;
+	uint32 Replications = 3;
+}
 
+message CreateTopicResponse{
+	string ErrorMsg = 1;
+}

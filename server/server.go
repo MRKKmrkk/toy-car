@@ -107,6 +107,25 @@ func (s *grpcServer) Consume(ctx context.Context, req *api.ConsumeRequest) (*api
 
 }
 
+func (s *grpcServer) CreateTopic(ctx context.Context, req *api.CreateTopicRequest) (*api.CreateTopicResponse, error) {
+
+	_, err := wal.CreateTopic(
+		req.GetTopic(),
+		req.GetPartitions(),
+		int(req.GetReplications()),
+		s.Config,
+	)
+
+	res := &api.CreateTopicResponse{}
+	if err != nil {
+		res.ErrorMsg = err.Error()
+		return nil, err
+	}
+
+	return res, nil
+
+}
+
 type ToyCarServer struct {
 	server   *grpc.Server
 	gserver  *grpcServer
