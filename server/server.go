@@ -7,10 +7,9 @@ import (
 	"net"
 	api "toy-car/api/v1"
 	"toy-car/config"
-	"toy-car/util"
 	"toy-car/wal"
+	"toy-car/zookeeper"
 
-	"github.com/samuel/go-zookeeper/zk"
 	"google.golang.org/grpc"
 )
 
@@ -18,7 +17,7 @@ type grpcServer struct {
 	api.UnimplementedLogServer
 	*config.Config
 	Topics map[string]*wal.Topic
-	zkConn *zk.Conn
+	zkConn *zookeeper.RichZookeeperConnection
 }
 
 func NewGRPCServer(config *config.Config) (*grpc.Server, *grpcServer, error) {
@@ -54,7 +53,7 @@ func newgrpcServer(config *config.Config) (*grpcServer, error) {
 		return nil, err
 	}
 
-	zkConn, err := util.GetZKConn(config)
+	zkConn, err := zookeeper.GetOrCreateZookeeperConnection()
 	if err != nil {
 		return nil, err
 	}
@@ -71,8 +70,13 @@ func newgrpcServer(config *config.Config) (*grpcServer, error) {
 
 func (s *grpcServer) Produce(ctx context.Context, req *api.ProduceRequest) (*api.ProduceResponse, error) {
 
+	isMetadataExist, err := s.zkConn.IsTopicExists(req.GetTopic())
+	if err != nil {
+		return nil, err
+	}
+
 	topic, isExists := s.Topics[req.GetTopic()]
-	if !isExists {
+	if !isMetadataExist || !isExists {
 		t, err := wal.CreateTopic(req.GetTopic(), req.PartitionId+1, 1, s.Config)
 		if err != nil {
 			return nil, err

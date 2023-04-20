@@ -1202,3 +1202,37 @@
 2023-04-19 21:43:12,301 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /0:0:0:0:0:0:0:1:36984 which had sessionid 0x1001b6c72350079
 2023-04-19 21:43:18,322 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x1001b6c72350079, timeout of 5000ms exceeded
 2023-04-19 21:43:18,323 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c72350079
+2023-04-20 02:09:11,706 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /183.136.225.42:64708
+2023-04-20 02:09:11,710 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195725856
+2023-04-20 02:09:11,710 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /183.136.225.42:64708 (no session established for client)
+2023-04-20 04:45:33,377 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /183.136.225.42:20991
+2023-04-20 04:45:33,377 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195725856
+2023-04-20 04:45:33,377 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /183.136.225.42:20991 (no session established for client)
+2023-04-20 04:45:33,405 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /183.136.225.42:21185
+2023-04-20 04:45:33,405 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 369295618
+2023-04-20 04:45:33,406 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /183.136.225.42:21185 (no session established for client)
+2023-04-20 10:40:40,875 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:37066
+2023-04-20 10:40:40,875 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:37066; will be dropped if server is in r-o mode
+2023-04-20 10:40:40,876 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:37066
+2023-04-20 10:40:40,881 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x1001b6c7235007a with negotiated timeout 5000 for client /1.15.135.178:37066
+2023-04-20 10:40:40,901 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007a
+2023-04-20 10:40:40,904 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:37066 which had sessionid 0x1001b6c7235007a
+2023-04-20 10:40:55,112 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:37070
+2023-04-20 10:40:55,112 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:37070; will be dropped if server is in r-o mode
+2023-04-20 10:40:55,112 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:37070
+2023-04-20 10:40:55,114 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x1001b6c7235007b with negotiated timeout 5000 for client /1.15.135.178:37070
+2023-04-20 10:40:55,201 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007b
+2023-04-20 10:40:55,204 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:37070 which had sessionid 0x1001b6c7235007b
+2023-04-20 10:40:58,674 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:37074
+2023-04-20 10:40:58,675 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:37074; will be dropped if server is in r-o mode
+2023-04-20 10:40:58,675 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:37074
+2023-04-20 10:40:58,677 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x1001b6c7235007c with negotiated timeout 5000 for client /1.15.135.178:37074
+2023-04-20 10:40:58,682 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007c
+2023-04-20 10:40:58,689 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:37074 which had sessionid 0x1001b6c7235007c
+2023-04-20 10:41:31,774 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:37090
+2023-04-20 10:41:31,778 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:37090; will be dropped if server is in r-o mode
+2023-04-20 10:41:31,779 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:37090
+2023-04-20 10:41:31,785 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x1001b6c7235007d with negotiated timeout 5000 for client /1.15.135.178:37090
+2023-04-20 10:41:31,828 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x1001b6c7235007d type:create cxid:0xf zxid:0x9e7 txntype:-1 reqpath:n/a Error Path:/toy-car/brokers/topics/apiTest Error:KeeperErrorCode = NodeExists for /toy-car/brokers/topics/apiTest
+2023-04-20 10:41:31,845 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007d
+2023-04-20 10:41:31,873 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:37090 which had sessionid 0x1001b6c7235007d

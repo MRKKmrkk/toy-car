@@ -315,3 +315,20 @@ func (conn *RichZookeeperConnection) SetPartitionStateVar(topic string, partitio
 	return err
 
 }
+
+func (conn *RichZookeeperConnection) IsTopicExists(topic string) (bool, error) {
+
+	topics, err := conn.ListTopics()
+	if err != nil {
+		return false, err
+	}
+
+	for _, t := range topics {
+		if topic == t {
+			return true, nil
+		}
+	}
+
+	return false, nil
+
+}
