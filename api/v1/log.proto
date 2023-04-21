@@ -42,8 +42,8 @@ message ConsumeResponse {
 }
 
 message Message {
-	string key = 1;
-	string value = 2;
+	bytes key = 1;
+	bytes value = 2;
 	uint64 offset = 3;
 }
 

@@ -3,6 +3,7 @@ package produce
 import (
 	"context"
 	api "toy-car/api/v1"
+	"toy-car/serialize"
 
 	"google.golang.org/grpc"
 )
@@ -26,6 +27,7 @@ type ToyCarProducer struct {
 	client         api.LogClient
 	partitioner    Partitioner
 	context        context.Context
+	serializer     serialize.ToyCarSerializer
 }
 
 func NewToyCarProducer(topic string, host string) (*ToyCarProducer, error) {
@@ -45,16 +47,27 @@ func NewToyCarProducer(topic string, host string) (*ToyCarProducer, error) {
 		context:        context.Background(),
 		// the deafault partitioner is round robbin
 		partitioner: PARTITIONER_ROUND_ROBBIN,
+		serializer:  &serialize.SimpleStringSerializer{},
 	}, nil
 
 }
 
-func (producer *ToyCarProducer) Send(key string, value string) {
+func (producer *ToyCarProducer) Send(key string, value string) (*api.ProduceResponse, error) {
+
+	keyBytes, err := producer.serializer.Serialize(key)
+	if err != nil {
+		return nil, err
+	}
+
+	valueBytes, err := producer.serializer.Serialize(value)
+	if err != nil {
+		return nil, err
+	}
 
 	msg := &api.ProduceRequest{
 		Msg: &api.Message{
-			Key:   key,
-			Value: value,
+			Key:   keyBytes,
+			Value: valueBytes,
 		},
 		Topic: producer.topic,
 		PartitionId: producer.partitioner(
@@ -67,6 +80,6 @@ func (producer *ToyCarProducer) Send(key string, value string) {
 		Ack: uint32(producer.acks),
 	}
 
-	producer.client.Produce(producer.context, msg)
+	return producer.client.Produce(producer.context, msg)
 
 }

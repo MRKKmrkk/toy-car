@@ -1236,3 +1236,32 @@
 2023-04-20 10:41:31,828 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x1001b6c7235007d type:create cxid:0xf zxid:0x9e7 txntype:-1 reqpath:n/a Error Path:/toy-car/brokers/topics/apiTest Error:KeeperErrorCode = NodeExists for /toy-car/brokers/topics/apiTest
 2023-04-20 10:41:31,845 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007d
 2023-04-20 10:41:31,873 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:37090 which had sessionid 0x1001b6c7235007d
+2023-04-20 12:55:52,371 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /89.248.165.65:51546
+2023-04-20 12:55:52,371 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 50331667
+2023-04-20 12:55:52,371 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /89.248.165.65:51546 (no session established for client)
+2023-04-20 16:50:31,698 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /92.63.196.150:2203
+2023-04-20 16:50:31,698 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 302055518
+2023-04-20 16:50:31,698 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /92.63.196.150:2203 (no session established for client)
+2023-04-20 17:32:16,876 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /178.159.37.98:65082
+2023-04-20 17:32:16,876 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 50331695
+2023-04-20 17:32:16,877 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /178.159.37.98:65082 (no session established for client)
+2023-04-20 22:35:07,278 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:52534
+2023-04-20 22:35:07,278 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:52534; will be dropped if server is in r-o mode
+2023-04-20 22:35:07,278 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:52534
+2023-04-20 22:35:07,282 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x1001b6c7235007e with negotiated timeout 5000 for client /1.15.135.178:52534
+2023-04-20 22:35:07,298 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x1001b6c7235007e type:create cxid:0xf zxid:0x9f0 txntype:-1 reqpath:n/a Error Path:/toy-car/brokers/topics/apiTest2 Error:KeeperErrorCode = NodeExists for /toy-car/brokers/topics/apiTest2
+2023-04-20 22:35:07,315 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007e
+2023-04-20 22:35:07,333 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:52534 which had sessionid 0x1001b6c7235007e
+2023-04-20 23:05:48,588 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /94.102.61.28:54722
+2023-04-20 23:05:48,598 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 1195725856
+2023-04-20 23:05:48,599 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /94.102.61.28:54722 (no session established for client)
+2023-04-21 01:25:21,903 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /89.248.165.42:59590
+2023-04-21 01:25:21,908 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@383] - Exception causing close of session 0x0: Len error 50331667
+2023-04-21 01:25:21,908 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /89.248.165.42:59590 (no session established for client)
+2023-04-21 09:15:47,911 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxnFactory@222] - Accepted socket connection from /1.15.135.178:38136
+2023-04-21 09:15:47,913 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@903] - Connection request from old client /1.15.135.178:38136; will be dropped if server is in r-o mode
+2023-04-21 09:15:47,923 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:ZooKeeperServer@949] - Client attempting to establish new session at /1.15.135.178:38136
+2023-04-21 09:15:47,926 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@694] - Established session 0x1001b6c7235007f with negotiated timeout 5000 for client /1.15.135.178:38136
+2023-04-21 09:15:47,945 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x1001b6c7235007f type:create cxid:0xf zxid:0x9f9 txntype:-1 reqpath:n/a Error Path:/toy-car/brokers/topics/api-test2 Error:KeeperErrorCode = NodeExists for /toy-car/brokers/topics/api-test2
+2023-04-21 09:15:47,958 [myid:] - INFO  [ProcessThread(sid:0 cport:9700)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x1001b6c7235007f
+2023-04-21 09:15:47,967 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:9700:NIOServerCnxn@1056] - Closed socket connection for client /1.15.135.178:38136 which had sessionid 0x1001b6c7235007f

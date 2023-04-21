@@ -95,6 +95,32 @@ func (s *grpcServer) Produce(ctx context.Context, req *api.ProduceRequest) (*api
 
 }
 
+func (s *grpcServer) ProduceStream(stream api.Log_ProduceStreamServer) error {
+
+	for {
+
+		// receive produce request from client
+		req, err := stream.Recv()
+		if err != nil {
+			return err
+		}
+
+		// staring produce log with produce request
+		res, err := s.Produce(stream.Context(), req)
+		if err != nil {
+			return err
+		}
+
+		// send produce response back to the client
+		err = stream.Send(res)
+		if err != nil {
+			return err
+		}
+
+	}
+
+}
+
 func (s *grpcServer) Consume(ctx context.Context, req *api.ConsumeRequest) (*api.ConsumeResponse, error) {
 
 	topic, ok := s.Topics[req.GetTopic()]

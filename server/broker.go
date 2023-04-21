@@ -1,10 +1,13 @@
 package server
 
 import (
+	"encoding/binary"
 	"fmt"
 	logger "log"
+	"os"
 	"path"
 	"strconv"
+	"sync"
 	api "toy-car/api/v1"
 	"toy-car/config"
 	"toy-car/zookeeper"
@@ -13,10 +16,93 @@ import (
 	"github.com/samuel/go-zookeeper/zk"
 )
 
+var (
+	// the coder of the binary
+	enc = binary.BigEndian
+)
+
+type LogEndOffset struct {
+	file *os.File
+	mu   sync.Mutex
+}
+
+type LeoManager struct {
+	leos map[string]*LogEndOffset
+	dir  string
+}
+
+func NewLeoManager(conf *config.Config) *LeoManager {
+
+	manager := &LeoManager{}
+	manager.dir = conf.LogDir
+	manager.leos = make(map[string]*LogEndOffset)
+
+	return manager
+
+}
+
+func (m *LeoManager) updateLeo(topic string, pid int, leo uint64) error {
+
+	key := fmt.Sprintf("%s-%d", topic, pid)
+	destination := path.Join(m.dir, key, "leo")
+
+	leoObj, isExists := m.leos[key]
+	if !isExists {
+		leoFile, err := os.OpenFile(
+			destination,
+			os.O_RDWR|os.O_CREATE|os.O_APPEND,
+			0644,
+		)
+		if err != nil {
+			return err
+		}
+
+		leoObj = &LogEndOffset{
+			file: leoFile,
+		}
+
+		m.leos[key] = leoObj
+
+	}
+
+	leoObj.mu.Lock()
+	defer leoObj.mu.Unlock()
+
+	return binary.Write(leoObj.file, enc, leo)
+
+}
+
+//func (m *LeoManager) getLeo(topic string, pid int) (uint64, error) {
+//
+//	leoObj, isExists := m.leos[fmt.Sprintf("%s-%d", topic, pid)]
+//	if !isExists {
+//		return 0, fmt.Errorf("get leo failed, cause %s-%d not found", topic, pid)
+//	}
+//
+//	bytes := make([]byte, 8)
+//	err := binary.Read(leoObj.file, enc, bytes)
+//	if err != nil {
+//		return 0, err
+//	}
+//
+//	return uint64(bytes), nil
+//
+//}
+
+func (m *LeoManager) Close() {
+
+	for _, v := range m.leos {
+		v.file.Close()
+	}
+
+}
+
 type Broker struct {
 	zkConn       *zookeeper.RichZookeeperConnection
 	config       *config.Config
 	IsController bool
+	mu           sync.Mutex
+	LeoManager   *LeoManager
 }
 
 func NewBroker(config *config.Config) (*Broker, error) {
@@ -30,12 +116,14 @@ func NewBroker(config *config.Config) (*Broker, error) {
 		zkConn:       conn,
 		config:       config,
 		IsController: false,
+		LeoManager:   NewLeoManager(config),
 	}, nil
 
 }
 
 func (ms *Broker) Close() {
 
+	ms.LeoManager.Close()
 	ms.zkConn.Close()
 
 }
@@ -236,3 +324,9 @@ func (broker *Broker) maintainISR() error {
 	}
 
 }
+
+//func (broker *Broker) updateLeo() error {
+//
+//	return nil
+//
+//}
