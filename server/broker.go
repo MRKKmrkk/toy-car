@@ -27,21 +27,34 @@ type LogEndOffset struct {
 }
 
 type LeoManager struct {
-	leos map[string]*LogEndOffset
-	dir  string
+	leos   map[string]*LogEndOffset
+	dir    string
+	leoBuf []byte
 }
 
-func NewLeoManager(conf *config.Config) *LeoManager {
+func NewLeoManager(conf *config.Config) (*LeoManager, error) {
 
 	manager := &LeoManager{}
 	manager.dir = conf.LogDir
-	manager.leos = make(map[string]*LogEndOffset)
+	manager.leoBuf = make([]byte, 8)
 
-	return manager
+	manager.leos = make(map[string]*LogEndOffset)
+	files, err := os.ReadDir(conf.LogDir)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			//todo : add to map
+		}
+	}
+
+	return manager, nil
 
 }
 
-func (m *LeoManager) updateLeo(topic string, pid int, leo uint64) error {
+func (m *LeoManager) UpdateLeo(topic string, pid int, leo uint64) error {
 
 	key := fmt.Sprintf("%s-%d", topic, pid)
 	destination := path.Join(m.dir, key, "leo")
@@ -68,26 +81,37 @@ func (m *LeoManager) updateLeo(topic string, pid int, leo uint64) error {
 	leoObj.mu.Lock()
 	defer leoObj.mu.Unlock()
 
-	return binary.Write(leoObj.file, enc, leo)
+	err := leoObj.file.Truncate(0)
+	if err != nil {
+		return err
+	}
+	err = binary.Write(leoObj.file, enc, leo)
+	if err != nil {
+		return err
+	}
+
+	return leoObj.file.Sync()
 
 }
 
-//func (m *LeoManager) getLeo(topic string, pid int) (uint64, error) {
-//
-//	leoObj, isExists := m.leos[fmt.Sprintf("%s-%d", topic, pid)]
-//	if !isExists {
-//		return 0, fmt.Errorf("get leo failed, cause %s-%d not found", topic, pid)
-//	}
-//
-//	bytes := make([]byte, 8)
-//	err := binary.Read(leoObj.file, enc, bytes)
-//	if err != nil {
-//		return 0, err
-//	}
-//
-//	return uint64(bytes), nil
-//
-//}
+func (m *LeoManager) GetLeo(topic string, pid int) (uint64, error) {
+
+	leoObj, isExists := m.leos[fmt.Sprintf("%s-%d", topic, pid)]
+	if !isExists {
+		return 0, fmt.Errorf("get leo failed, cause %s-%d not found", topic, pid)
+	}
+
+	leoObj.mu.Lock()
+	defer leoObj.mu.Unlock()
+
+	_, err := leoObj.file.ReadAt(m.leoBuf, 0)
+	if err != nil {
+		return 0, err
+	}
+
+	return enc.Uint64(m.leoBuf), nil
+
+}
 
 func (m *LeoManager) Close() {
 
@@ -112,11 +136,16 @@ func NewBroker(config *config.Config) (*Broker, error) {
 		return nil, err
 	}
 
+	lm, err := NewLeoManager(config)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Broker{
 		zkConn:       conn,
 		config:       config,
 		IsController: false,
-		LeoManager:   NewLeoManager(config),
+		LeoManager:   lm,
 	}, nil
 
 }
