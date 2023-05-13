@@ -16,8 +16,9 @@ import (
 type grpcServer struct {
 	api.UnimplementedLogServer
 	*config.Config
-	Topics map[string]*wal.Topic
-	zkConn *zookeeper.RichZookeeperConnection
+	Topics     map[string]*wal.Topic
+	zkConn     *zookeeper.RichZookeeperConnection
+	leoManager *LeoManager
 }
 
 func NewGRPCServer(config *config.Config) (*grpc.Server, *grpcServer, error) {
@@ -58,10 +59,16 @@ func newgrpcServer(config *config.Config) (*grpcServer, error) {
 		return nil, err
 	}
 
+	lm, err := NewLeoManager(config)
+	if err != nil {
+		return nil, err
+	}
+
 	server := &grpcServer{
-		Config: config,
-		Topics: topics,
-		zkConn: zkConn,
+		Config:     config,
+		Topics:     topics,
+		zkConn:     zkConn,
+		leoManager: lm,
 	}
 
 	return server, nil
@@ -87,6 +94,12 @@ func (s *grpcServer) Produce(ctx context.Context, req *api.ProduceRequest) (*api
 	}
 
 	off, err := topic.Append(req.GetMsg(), req.GetPartitionId())
+	if err != nil {
+		return nil, err
+	}
+
+	// update leo
+	err = s.leoManager.UpdateLeo(req.GetTopic(), int(req.GetPartitionId()), off)
 	if err != nil {
 		return nil, err
 	}

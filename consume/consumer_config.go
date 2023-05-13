@@ -22,6 +22,8 @@ type toyCarConsumeConf struct {
 	AutoCommitRestFlag OffsetRestFlag
 	GroupId            string
 	ConsumeId          string
+	KeyDeserializer    serialize.ToyCarDeserializer
+	ValueDeserializer  serialize.ToyCarDeserializer
 }
 
 type ToyCarConsumeConfBuilder struct {
@@ -33,6 +35,8 @@ type ToyCarConsumeConfBuilder struct {
 	autoCommitRestFlag OffsetRestFlag
 	groupId            string
 	consumeId          string
+	KeyDeserializer    serialize.ToyCarDeserializer
+	ValueDeserializer  serialize.ToyCarDeserializer
 }
 
 func NewToyCarConsumerConfBuilder(host string, topic string, groupId string) *ToyCarConsumeConfBuilder {
@@ -136,6 +140,32 @@ func (builder *ToyCarConsumeConfBuilder) SetConsumeId(consumeId string) *ToyCarC
 func (builder *ToyCarConsumeConfBuilder) GetConsumeId() string {
 
 	return builder.consumeId
+
+}
+
+func (builder *ToyCarConsumeConfBuilder) SetKeyDeserializer(deser serialize.ToyCarDeserializer) *ToyCarConsumeConfBuilder {
+
+	builder.KeyDeserializer = deser
+	return builder
+
+}
+
+func (builder *ToyCarConsumeConfBuilder) GetKeyDeserializer() serialize.ToyCarDeserializer {
+
+	return builder.KeyDeserializer
+
+}
+
+func (builder *ToyCarConsumeConfBuilder) SetValueDeserializer(deser serialize.ToyCarDeserializer) *ToyCarConsumeConfBuilder {
+
+	builder.ValueDeserializer = deser
+	return builder
+
+}
+
+func (builder *ToyCarConsumeConfBuilder) GetValueDeserializer() serialize.ToyCarDeserializer {
+
+	return builder.ValueDeserializer
 
 }
 

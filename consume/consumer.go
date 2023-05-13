@@ -16,6 +16,8 @@ type ToyCarConsumer struct {
 	context            context.Context
 	serializer         serialize.ToyCarSerializer
 	deserializer       serialize.ToyCarDeserializer
+	keyDeserializer    serialize.ToyCarDeserializer
+	valueDeserializer  serialize.ToyCarDeserializer
 	isAutoCommit       bool
 	autoCommitRestFlag OffsetRestFlag
 	groupId            string
@@ -44,11 +46,18 @@ func NewToyCarConsumer(config *toyCarConsumeConf) (*ToyCarConsumer, error) {
 
 }
 
-func (consume *ToyCarConsumer) Consume() (*api.ConsumeResponse, error) {
+type Message struct {
+	Key    interface{}
+	Value  interface{}
+	Offset uint64
+}
+
+func (consume *ToyCarConsumer) ConsumeByOffset(off uint64) (*Message, error) {
 
 	req := &api.ConsumeRequest{
 		Topic:       consume.topic,
 		PartitionId: 0,
+		Offset:      off,
 	}
 
 	res, err := consume.client.Consume(consume.context, req)
@@ -56,6 +65,20 @@ func (consume *ToyCarConsumer) Consume() (*api.ConsumeResponse, error) {
 		return nil, err
 	}
 
-	return res, nil
+	msg := &Message{}
+	key, err := consume.keyDeserializer.Deserialize(res.Msg.GetKey())
+	if err != nil {
+		return nil, err
+	}
+	value, err := consume.valueDeserializer.Deserialize(res.Msg.GetValue())
+	if err != nil {
+		return nil, err
+	}
+
+	msg.Key = key
+	msg.Value = value
+	msg.Offset = res.Msg.GetOffset()
+
+	return msg, nil
 
 }
